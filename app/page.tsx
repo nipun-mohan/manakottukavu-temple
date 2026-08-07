@@ -45,7 +45,7 @@ export default function Home() {
     </section>
 
     <section className="offerings-section minimal-offerings" id="offerings">
-      <div className="section-heading reveal"><div><p className="section-kicker light"><L en="Vazhipadu" ml="വഴിപാടുകൾ"/></p><h2><L en="Temple offerings" ml="ക്ഷേത്ര വഴിപാടുകൾ"/></h2></div><p><L en="Current offering list and rates supplied by the temple committee." ml="ക്ഷേത്രസമിതി നൽകിയ നിലവിലെ വഴിപാട് പട്ടികയും നിരക്കുകളും."/></p></div>
+      <div className="section-heading reveal"><div><p className="section-kicker light"><L en="Vazhipadu" ml="വഴിപാടുകൾ"/></p><h2><L en="Temple offerings" ml="ക്ഷേത്ര വഴിപാടുകൾ"/></h2></div></div>
       <div className="offering-grid">{offerings.map((o, i) => <article className="offering-card reveal" key={o[0]}><div className="offering-top"><span>{String(i+1).padStart(2,"0")}</span><b>{o[1]}</b></div><h3>{lang === "en" ? o[0] : o[1]}</h3>{o[3] && <p>{lang === "en" ? o[3] : o[4]}</p>}<div className="offering-bottom"><strong>{o[2] ?? <L en="Enquire" ml="അന്വേഷിക്കുക"/>}</strong><a href="tel:+918129026387"><L en="Call to book" ml="ബുക്ക് ചെയ്യാൻ വിളിക്കുക"/></a></div></article>)}</div>
     </section>
 
