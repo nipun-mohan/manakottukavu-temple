@@ -5,7 +5,7 @@ import { CSSProperties, useEffect, useState } from "react";
 const committeeSource = "https://manakottukavu.nipunmohanan.workers.dev/media/renovation/document/page-12.jpg";
 
 const templeRepresentatives = [
-  { image: "trustee", x: "19.1%", y: "12.2%", en: "P. Venugopalanunni", ml: "പി. വേണുഗോപാലനുണ്ണി", roleEn: "Trustee", roleMl: "ട്രസ്റ്റി" },
+  { image: "trustee", x: "19.1%", y: "12.2%", en: "P. Venugopalanunni", ml: "പി. വേണുഗോപാലനുണ്ണി", roleEn: "Trustee", roleMl: "ഊരാളൻ" },
   { image: "tantri", x: "49.4%", y: "12.2%", en: "Balakrishnan Vai", ml: "ബാലകൃഷ്ണൻ വൈ", roleEn: "Kavu Tantri", roleMl: "കാവ് തന്ത്രി" },
   { image: "poojari", x: "81.2%", y: "12.2%", en: "Muraleedharan Irakkode", ml: "മുരളീധരൻ ഇരക്കോട്", roleEn: "Kavu Poojari", roleMl: "കാവ് പൂജാരി" },
 ];
@@ -36,6 +36,20 @@ type Person = { image: string; x: string; y: string; en: string; ml: string; rol
 export default function CommitteePage() {
   const [lang, setLang] = useState<"en" | "ml">("en");
   useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+  useEffect(() => {
+    const restoreLanguage = () => {
+      const saved = window.localStorage.getItem("manakottukavu-language");
+      if (saved === "en" || saved === "ml") setLang(saved);
+    };
+    restoreLanguage();
+    window.addEventListener("storage", restoreLanguage);
+    return () => window.removeEventListener("storage", restoreLanguage);
+  }, []);
+  const toggleLanguage = () => setLang(current => {
+    const next = current === "en" ? "ml" : "en";
+    window.localStorage.setItem("manakottukavu-language", next);
+    return next;
+  });
   const L = ({ en, ml }: { en: React.ReactNode; ml: React.ReactNode }) => <>{lang === "en" ? en : ml}</>;
   const card = (person: Person) => <article className="committee-card" key={person.image}>
     <div className="committee-portrait" role="img" aria-label={lang === "en" ? person.en : person.ml} style={{ backgroundImage: `url(${committeeSource})`, "--portrait-x": person.x, "--portrait-y": person.y } as CSSProperties}/>
@@ -43,7 +57,7 @@ export default function CommitteePage() {
   </article>;
 
   return <main className={`committee-page language-${lang}`}>
-    <header className="site-header subpage-header"><a className="brand" href="/"><span className="brand-mark" aria-hidden="true">ॐ</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ്</small></span></a><nav aria-label="Primary navigation"><a href="/"><L en="Home" ml="ഹോം"/></a><a href="/#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="/committee" aria-current="page"><L en="Temple Committee" ml="ക്ഷേത്ര കമ്മിറ്റി"/></a><a href="/renovation"><L en="Renovation" ml="പുനരുദ്ധാരണം"/></a><a href="/#contact"><L en="Contact" ml="ബന്ധപ്പെടുക"/></a></nav><button className="language-toggle" onClick={() => setLang(lang === "en" ? "ml" : "en")} aria-label="Change language"><span className={lang === "en" ? "active" : ""}>EN</span><i/><span className={lang === "ml" ? "active" : ""}>മ</span></button></header>
+    <header className="site-header subpage-header"><a className="brand" href="/"><span className="brand-mark" aria-hidden="true">ॐ</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ്</small></span></a><nav aria-label="Primary navigation"><a href="/"><L en="Home" ml="ഹോം"/></a><a href="/#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="/committee" aria-current="page"><L en="Temple Committee" ml="ക്ഷേത്ര കമ്മിറ്റി"/></a><a href="/renovation"><L en="Renovation" ml="പുനരുദ്ധാരണം"/></a><a href="/#contact"><L en="Contact" ml="ബന്ധപ്പെടുക"/></a></nav><button className="language-toggle" onClick={toggleLanguage} aria-label="Change language"><span className={lang === "en" ? "active" : ""}>EN</span><i/><span className={lang === "ml" ? "active" : ""}>മ</span></button></header>
 
     <section className="committee-hero"><p className="section-kicker"><L en="Temple administration" ml="ക്ഷേത്ര ഭരണസമിതി"/></p><h1><L en="Temple Committee" ml="ക്ഷേത്ര കമ്മിറ്റി"/></h1></section>
 
