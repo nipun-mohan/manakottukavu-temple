@@ -39,13 +39,13 @@ export default function Home() {
     </header>
 
     <section className="hero minimal-hero" id="home">
-      <div className="hero-visual"><img src="https://manakottukavu.nipunmohanan.workers.dev/media/renovation/carousel/12.jpeg" alt="Manakottukavu temple in Mullurkkara"/><div className="hero-shade"/></div>
-      <div className="hero-copy reveal"><p className="eyebrow"><span/><L en="Palayam Devaswom" ml="പാലയം ദേവസ്വം"/></p><h1><L en={<>Manakottukavu<br/><em>Temple</em></>} ml={<>മനക്കോട്ടുകാവ്<br/><em>ക്ഷേത്രം</em></>}/></h1><p className="hero-lead"><L en="A peaceful Bhagavathi shrine rooted in devotion, tradition, and community." ml="ഭക്തിയുടെയും പാരമ്പര്യത്തിന്റെയും കൂട്ടായ്മയുടെയും ശാന്തമായ ഭഗവതിസന്നിധി."/></p></div>
+      <div className="hero-visual"><img src="https://manakottukavu.nipunmohanan.workers.dev/media/renovation/carousel/11.jpeg" alt="Manakottukavu temple in Mullurkkara"/><div className="hero-shade"/></div>
+      <div className="hero-copy reveal"><p className="eyebrow"><span/><L en="Palayam Devaswom" ml="പാലയം ദേവസ്വം"/></p><h1><L en={<>Manakottukavu<br/>Temple</>} ml={<>മനക്കോട്ടുകാവ്<br/>ക്ഷേത്രം</>}/></h1><p className="hero-lead"><L en="A peaceful Bhagavathi shrine rooted in devotion, tradition, and community." ml="ഭക്തിയുടെയും പാരമ്പര്യത്തിന്റെയും കൂട്ടായ്മയുടെയും ശാന്തമായ ഭഗവതിസന്നിധി."/></p></div>
       <div className="hero-timings"><div><span><L en="Morning worship" ml="രാവിലെ ദർശനം"/></span><strong><L en="Call for today’s timing" ml="ഇന്നത്തെ സമയം അറിയാൻ വിളിക്കുക"/></strong></div><div><span><L en="Evening worship" ml="വൈകുന്നേരം ദർശനം"/></span><strong><L en="Call for today’s timing" ml="ഇന്നത്തെ സമയം അറിയാൻ വിളിക്കുക"/></strong></div><div><span><L en="Temple contact" ml="ക്ഷേത്ര ബന്ധപ്പെടൽ"/></span><strong><a href="tel:+918129026387">+91 81290 26387</a></strong></div></div>
     </section>
 
     <section className="offerings-section minimal-offerings" id="offerings">
-      <div className="section-heading reveal"><div><p className="section-kicker light"><L en="Vazhipadu" ml="വഴിപാടുകൾ"/></p><h2><L en={<>Temple <em>offerings</em></>} ml={<>ക്ഷേത്ര <em>വഴിപാടുകൾ</em></>}/></h2></div><p><L en="Current offering list and rates supplied by the temple committee." ml="ക്ഷേത്രസമിതി നൽകിയ നിലവിലെ വഴിപാട് പട്ടികയും നിരക്കുകളും."/></p></div>
+      <div className="section-heading reveal"><div><p className="section-kicker light"><L en="Vazhipadu" ml="വഴിപാടുകൾ"/></p><h2><L en="Temple offerings" ml="ക്ഷേത്ര വഴിപാടുകൾ"/></h2></div><p><L en="Current offering list and rates supplied by the temple committee." ml="ക്ഷേത്രസമിതി നൽകിയ നിലവിലെ വഴിപാട് പട്ടികയും നിരക്കുകളും."/></p></div>
       <div className="offering-grid">{offerings.map((o, i) => <article className="offering-card reveal" key={o[0]}><div className="offering-top"><span>{String(i+1).padStart(2,"0")}</span><b>{o[1]}</b></div><h3>{lang === "en" ? o[0] : o[1]}</h3>{o[3] && <p>{lang === "en" ? o[3] : o[4]}</p>}<div className="offering-bottom"><strong>{o[2] ?? <L en="Enquire" ml="അന്വേഷിക്കുക"/>}</strong><a href="tel:+918129026387"><L en="Call to book" ml="ബുക്ക് ചെയ്യാൻ വിളിക്കുക"/></a></div></article>)}</div>
     </section>
 
