@@ -23,6 +23,9 @@ const offerings = [
 
 export default function Home() {
   const [lang, setLang] = useState<"en" | "ml">("en");
+  const [bookingOpen, setBookingOpen] = useState(false);
+  const [bookingOffering, setBookingOffering] = useState(offerings[0][0]);
+  const [devoteeName, setDevoteeName] = useState("");
   useEffect(() => {
     document.documentElement.lang = lang;
     const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && entry.target.classList.add("is-visible")), { threshold: .08 });
@@ -30,6 +33,14 @@ export default function Home() {
     return () => observer.disconnect();
   }, [lang]);
   const L = ({ en, ml }: { en: React.ReactNode; ml: React.ReactNode }) => <>{lang === "en" ? en : ml}</>;
+  const sendBooking = (event: React.FormEvent) => {
+    event.preventDefault();
+    const item = offerings.find(offering => offering[0] === bookingOffering) ?? offerings[0];
+    const message = lang === "en"
+      ? `Namaskaram, I would like to book ${item[0]} (${item[2] ?? "price on enquiry"})${devoteeName ? ` for ${devoteeName}` : ""}. Please share the available date and payment details.`
+      : `നമസ്കാരം, ${item[1]} (${item[2] ?? "നിരക്ക് അന്വേഷിക്കുക"})${devoteeName ? ` — ${devoteeName} എന്ന പേരിൽ` : ""} ബുക്ക് ചെയ്യാൻ ആഗ്രഹിക്കുന്നു. ലഭ്യമായ തീയതിയും പണമടയ്ക്കാനുള്ള വിവരങ്ങളും അറിയിക്കുമോ?`;
+    window.open(`https://wa.me/918129026387?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+  };
 
   return <main className={`language-${lang}`}>
     <header className="site-header home-header">
@@ -39,10 +50,13 @@ export default function Home() {
     </header>
 
     <section className="hero minimal-hero" id="home">
-      <div className="hero-visual"><img src="https://manakottukavu.nipunmohanan.workers.dev/media/renovation/carousel/12.jpeg" alt="Front view of Manakottukavu temple in Mullurkkara"/><div className="hero-shade"/></div>
+      <div className="hero-visual"><img src="/temple-hero-ai.png" alt="Enhanced view based on the real Manakottukavu temple photograph"/><div className="hero-shade"/></div>
       <div className="hero-copy reveal"><p className="eyebrow"><span/><L en="Palayam Devaswom" ml="പാലയം ദേവസ്വം"/></p><h1><L en={<>Manakottukavu<br/>Temple</>} ml={<>മനക്കോട്ടുകാവ്<br/>ക്ഷേത്രം</>}/></h1><p className="hero-lead"><L en="A peaceful Bhagavathi shrine rooted in devotion, tradition, and community." ml="ഭക്തിയുടെയും പാരമ്പര്യത്തിന്റെയും കൂട്ടായ്മയുടെയും ശാന്തമായ ഭഗവതിസന്നിധി."/></p><div className="hero-actions"><a className="hero-primary" href="#offerings"><L en="View offerings" ml="വഴിപാടുകൾ കാണുക"/> <span>→</span></a><a className="hero-secondary" href="/renovation"><L en="Renovation details" ml="പുനരുദ്ധാരണ വിവരങ്ങൾ"/></a></div></div>
       <div className="hero-timings"><div><span><L en="Morning worship" ml="രാവിലെ ദർശനം"/></span><strong><L en="Call for today’s timing" ml="ഇന്നത്തെ സമയം അറിയാൻ വിളിക്കുക"/></strong></div><div><span><L en="Evening worship" ml="വൈകുന്നേരം ദർശനം"/></span><strong><L en="Call for today’s timing" ml="ഇന്നത്തെ സമയം അറിയാൻ വിളിക്കുക"/></strong></div><div><span><L en="Temple contact" ml="ക്ഷേത്ര ബന്ധപ്പെടൽ"/></span><strong><a href="tel:+918129026387">+91 81290 26387</a></strong></div></div>
     </section>
+
+    <button className="whatsapp-fab" onClick={() => setBookingOpen(true)} aria-label={lang === "en" ? "Book a pooja on WhatsApp" : "വാട്സ്ആപ്പിൽ പൂജ ബുക്ക് ചെയ്യുക"}><span className="wa-mark">WA</span><b><L en="Book Pooja" ml="പൂജ ബുക്ക് ചെയ്യുക"/></b></button>
+    {bookingOpen && <div className="booking-backdrop" role="presentation" onMouseDown={event => event.target === event.currentTarget && setBookingOpen(false)}><section className="booking-dialog" role="dialog" aria-modal="true" aria-labelledby="booking-title"><button className="booking-close" onClick={() => setBookingOpen(false)} aria-label="Close">×</button><p className="section-kicker"><L en="WhatsApp booking" ml="വാട്സ്ആപ്പ് ബുക്കിംഗ്"/></p><h2 id="booking-title"><L en="Book your pooja" ml="പൂജ ബുക്ക് ചെയ്യുക"/></h2><p><L en="Choose an offering and send the prepared request directly to the temple’s WhatsApp." ml="ഒരു വഴിപാട് തിരഞ്ഞെടുത്ത് തയ്യാറാക്കിയ അഭ്യർത്ഥന ക്ഷേത്രത്തിന്റെ വാട്സ്ആപ്പിലേക്ക് നേരിട്ട് അയയ്ക്കുക."/></p><form onSubmit={sendBooking}><label><span><L en="Offering" ml="വഴിപാട്"/></span><select value={bookingOffering} onChange={event => setBookingOffering(event.target.value)}>{offerings.map(offering => <option value={offering[0]} key={offering[0]}>{lang === "en" ? offering[0] : offering[1]} · {offering[2] ?? (lang === "en" ? "Enquire" : "അന്വേഷിക്കുക")}</option>)}</select></label><label><span><L en="Devotee name (optional)" ml="ഭക്തന്റെ പേര് (ഐച്ഛികം)"/></span><input value={devoteeName} onChange={event => setDevoteeName(event.target.value)} placeholder={lang === "en" ? "Name for the offering" : "വഴിപാടിനുള്ള പേര്"}/></label><button className="booking-submit" type="submit"><span className="wa-mark small">WA</span><L en="Continue on WhatsApp" ml="വാട്സ്ആപ്പിൽ തുടരുക"/></button></form><small><L en="WhatsApp: +91 81290 26387" ml="വാട്സ്ആപ്പ്: +91 81290 26387"/></small></section></div>}
 
     <section className="offerings-section minimal-offerings" id="offerings">
       <div className="section-heading reveal"><div><p className="section-kicker light"><L en="Vazhipadu" ml="വഴിപാടുകൾ"/></p><h2><L en="Temple offerings" ml="ക്ഷേത്ര വഴിപാടുകൾ"/></h2></div></div>
