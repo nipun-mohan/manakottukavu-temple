@@ -33,14 +33,14 @@ export default function Home() {
 
   return <main className={`language-${lang}`}>
     <header className="site-header home-header">
-      <a className="brand" href="#home"><span className="brand-mark">✦</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ് · മുള്ളൂർക്കര</small></span></a>
+      <a className="brand" href="#home"><span className="brand-mark" aria-hidden="true">ॐ</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ്</small></span></a>
       <nav aria-label="Primary navigation"><a href="#home"><L en="Home" ml="ഹോം"/></a><a href="#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="#contact"><L en="Contact" ml="ബന്ധപ്പെടുക"/></a><a href="/renovation"><L en="Renovation" ml="പുനരുദ്ധാരണം"/></a></nav>
       <button className="language-toggle" onClick={() => setLang(lang === "en" ? "ml" : "en")} aria-label="Change language"><span className={lang === "en" ? "active" : ""}>EN</span><i/><span className={lang === "ml" ? "active" : ""}>മ</span></button>
     </header>
 
     <section className="hero minimal-hero" id="home">
-      <div className="hero-visual"><img src="https://manakottukavu-renewal.nipunmohanan.chatgpt.site/renovation/carousel/12.jpeg" alt="Manakottukavu temple in Mullurkkara"/><div className="hero-shade"/></div>
-      <div className="hero-copy reveal"><p className="eyebrow"><span/><L en="Palayam Devaswom · Mullurkkara" ml="പാലയം ദേവസ്വം · മുള്ളൂർക്കര"/></p><h1><L en={<>Manakottukavu<br/><em>Temple</em></>} ml={<>മനക്കോട്ടുകാവ്<br/><em>ക്ഷേത്രം</em></>}/></h1><p className="hero-lead"><L en="A peaceful Bhagavathi shrine in Mullurkkara, Thrissur — rooted in devotion, tradition, and community." ml="തൃശ്ശൂർ മുള്ളൂർക്കരയിലെ ഭക്തിയുടെയും പാരമ്പര്യത്തിന്റെയും കൂട്ടായ്മയുടെയും ശാന്തമായ ഭഗവതിസന്നിധി."/></p></div>
+      <div className="hero-visual"><img src="https://manakottukavu.nipunmohanan.workers.dev/media/renovation/carousel/12.jpeg" alt="Manakottukavu temple in Mullurkkara"/><div className="hero-shade"/></div>
+      <div className="hero-copy reveal"><p className="eyebrow"><span/><L en="Palayam Devaswom" ml="പാലയം ദേവസ്വം"/></p><h1><L en={<>Manakottukavu<br/><em>Temple</em></>} ml={<>മനക്കോട്ടുകാവ്<br/><em>ക്ഷേത്രം</em></>}/></h1><p className="hero-lead"><L en="A peaceful Bhagavathi shrine rooted in devotion, tradition, and community." ml="ഭക്തിയുടെയും പാരമ്പര്യത്തിന്റെയും കൂട്ടായ്മയുടെയും ശാന്തമായ ഭഗവതിസന്നിധി."/></p></div>
       <div className="hero-timings"><div><span><L en="Morning worship" ml="രാവിലെ ദർശനം"/></span><strong><L en="Call for today’s timing" ml="ഇന്നത്തെ സമയം അറിയാൻ വിളിക്കുക"/></strong></div><div><span><L en="Evening worship" ml="വൈകുന്നേരം ദർശനം"/></span><strong><L en="Call for today’s timing" ml="ഇന്നത്തെ സമയം അറിയാൻ വിളിക്കുക"/></strong></div><div><span><L en="Temple contact" ml="ക്ഷേത്ര ബന്ധപ്പെടൽ"/></span><strong><a href="tel:+918129026387">+91 81290 26387</a></strong></div></div>
     </section>
 
@@ -51,6 +51,6 @@ export default function Home() {
 
     <section className="contact-section" id="contact"><div><p className="section-kicker"><L en="Visit & contact" ml="സന്ദർശനവും ബന്ധപ്പെടലും"/></p><h2><L en="Manakottukavu, Mullurkkara" ml="മനക്കോട്ടുകാവ്, മുള്ളൂർക്കര"/></h2><p><L en="For current worship timings, offering bookings, and temple information, please contact the temple directly." ml="നിലവിലെ ദർശനസമയം, വഴിപാട് ബുക്കിംഗ്, ക്ഷേത്രവിവരങ്ങൾ എന്നിവയ്ക്ക് ക്ഷേത്രവുമായി നേരിട്ട് ബന്ധപ്പെടുക."/></p><a className="primary-contact" href="tel:+918129026387">+91 81290 26387</a></div><div className="contact-card"><span><L en="Temple committee" ml="ക്ഷേത്ര സമിതി"/></span><a href="tel:+919745822535"><b>Ajish Kumar</b><small><L en="President" ml="പ്രസിഡന്റ്"/> · 97458 22535</small></a><a href="tel:+918848403303"><b>K. Saji</b><small><L en="Secretary" ml="സെക്രട്ടറി"/> · 88484 03303</small></a><a href="tel:+919441270765"><b>K. A. Ashok Kumar</b><small><L en="Treasurer" ml="ട്രഷറർ"/> · 94412 70765</small></a></div></section>
 
-    <footer><a className="brand" href="#home"><span className="brand-mark">✦</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ് · മുള്ളൂർക്കര</small></span></a><p><L en="Palayam Devaswom, Mullurkkara, Thrissur, Kerala." ml="പാലയം ദേവസ്വം, മുള്ളൂർക്കര, തൃശ്ശൂർ, കേരളം."/></p><div><a href="#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="/renovation"><L en="Renovation" ml="പുനരുദ്ധാരണം"/></a><a href={facebookUrl} target="_blank" rel="noreferrer">Facebook</a></div><small>© {new Date().getFullYear()} Manakottukavu</small></footer>
+    <footer><a className="brand" href="#home"><span className="brand-mark" aria-hidden="true">ॐ</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ്</small></span></a><p><L en="Palayam Devaswom, Mullurkkara, Thrissur, Kerala." ml="പാലയം ദേവസ്വം, മുള്ളൂർക്കര, തൃശ്ശൂർ, കേരളം."/></p><div><a href="#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="/renovation"><L en="Renovation" ml="പുനരുദ്ധാരണം"/></a><a href={facebookUrl} target="_blank" rel="noreferrer">Facebook</a></div><small>© {new Date().getFullYear()} Manakottukavu</small></footer>
   </main>;
 }
