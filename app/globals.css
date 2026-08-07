@@ -104,7 +104,7 @@ footer>small{border-color:var(--line)}
 @media(prefers-reduced-motion:reduce){.booklet-viewer,.booklet-viewer-inner{animation:none}}
 
 /* Final contrast, typography, and sponsorship layout refinement */
-em{font-style:normal;color:inherit}
+em,i{font-style:normal;color:inherit}
 .minimal-hero h1{font-size:clamp(42px,5.5vw,70px);line-height:1.04}
 .renovation-hero h1{font-size:clamp(40px,4.8vw,64px);line-height:1.06}
 .intro h2,.section-heading h2,.contact-section h2,.details-intro h2,.sponsorship-section h2,.bank-section h2,.committee-section h2,.document-section h2{font-size:clamp(32px,3.6vw,50px);line-height:1.1}
