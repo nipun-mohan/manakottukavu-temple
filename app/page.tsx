@@ -32,6 +32,20 @@ export default function Home() {
     document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, [lang]);
+  useEffect(() => {
+    const restoreLanguage = () => {
+      const saved = window.localStorage.getItem("manakottukavu-language");
+      if (saved === "en" || saved === "ml") setLang(saved);
+    };
+    restoreLanguage();
+    window.addEventListener("storage", restoreLanguage);
+    return () => window.removeEventListener("storage", restoreLanguage);
+  }, []);
+  const toggleLanguage = () => setLang(current => {
+    const next = current === "en" ? "ml" : "en";
+    window.localStorage.setItem("manakottukavu-language", next);
+    return next;
+  });
   const L = ({ en, ml }: { en: React.ReactNode; ml: React.ReactNode }) => <>{lang === "en" ? en : ml}</>;
   const sendBooking = (event: React.FormEvent) => {
     event.preventDefault();
@@ -46,7 +60,7 @@ export default function Home() {
     <header className="site-header home-header">
       <a className="brand" href="#home"><span className="brand-mark" aria-hidden="true">ॐ</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ്</small></span></a>
       <nav aria-label="Primary navigation"><a href="#home"><L en="Home" ml="ഹോം"/></a><a href="#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="/committee"><L en="Temple Committee" ml="ക്ഷേത്ര കമ്മിറ്റി"/></a><a href="#contact"><L en="Contact" ml="ബന്ധപ്പെടുക"/></a><a href="/renovation"><L en="Renovation" ml="പുനരുദ്ധാരണം"/></a></nav>
-      <button className="language-toggle" onClick={() => setLang(lang === "en" ? "ml" : "en")} aria-label="Change language"><span className={lang === "en" ? "active" : ""}>EN</span><i/><span className={lang === "ml" ? "active" : ""}>മ</span></button>
+      <button className="language-toggle" onClick={toggleLanguage} aria-label="Change language"><span className={lang === "en" ? "active" : ""}>EN</span><i/><span className={lang === "ml" ? "active" : ""}>മ</span></button>
     </header>
 
     <section className="hero minimal-hero" id="home">
