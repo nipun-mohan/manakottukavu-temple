@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 
-const slides = Array.from({ length: 18 }, (_, i) => `/renovation/carousel/${String(i + 1).padStart(2, "0")}.jpeg`);
-const documentPages = Array.from({ length: 12 }, (_, i) => `/renovation/document/page-${String(i + 1).padStart(2, "0")}.jpg`);
+const mediaHost = "https://manakottukavu-renewal.nipunmohanan.chatgpt.site";
+const slides = Array.from({ length: 18 }, (_, i) => `${mediaHost}/renovation/carousel/${String(i + 1).padStart(2, "0")}.jpeg`);
+const documentPages = Array.from({ length: 12 }, (_, i) => `${mediaHost}/renovation/document/page-${String(i + 1).padStart(2, "0")}.jpg`);
 
 const sponsorships = [
   ["Karinkal pillar", "കരിങ്കൽ തൂൺ", "₹25,000"], ["Door", "പുനർദ്വാരം", "₹45,000"], ["Sopanam", "സോപാനം", "₹35,000"],
@@ -22,7 +23,7 @@ export default function RenovationPage() {
   return <main className={`renovation-page language-${lang}`}>
     <header className="site-header subpage-header"><a className="brand" href="/"><span className="brand-mark">✦</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ് · മുള്ളൂർക്കര</small></span></a><nav><a href="/"><L en="Home" ml="ഹോം"/></a><a href="/#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="#details"><L en="Project details" ml="പദ്ധതി വിവരങ്ങൾ"/></a><a href="#document"><L en="Full document" ml="പൂർണ്ണ രേഖ"/></a></nav><button className="language-toggle" onClick={() => setLang(lang === "en" ? "ml" : "en")}><span className={lang === "en" ? "active" : ""}>EN</span><i/><span className={lang === "ml" ? "active" : ""}>മ</span></button></header>
 
-    <section className="renovation-hero"><div className="renovation-hero-copy"><p className="eyebrow"><span/><L en="Manakottukavu Trust" ml="മനക്കോട്ടുകാവ് ട്രസ്റ്റ്"/></p><h1><L en={<>Temple renovation<br/><em>details</em></>} ml={<>ക്ഷേത്ര പുനരുദ്ധാരണ<br/><em>വിവരങ്ങൾ</em></>}/></h1><p><L en="The history, vision, ongoing work, sponsorship opportunities, and official committee information for the Manakottukavu restoration project." ml="മനക്കോട്ടുകാവ് പുനരുദ്ധാരണ പദ്ധതിയുടെ ചരിത്രം, സങ്കൽപ്പം, പുരോഗതി, സ്പോൺസർഷിപ്പ് അവസരങ്ങൾ, ഔദ്യോഗിക സമിതി വിവരങ്ങൾ."/></p></div><img src="/gallery/renewal-model.jpg" alt="Proposed Manakottukavu temple model"/></section>
+    <section className="renovation-hero"><div className="renovation-hero-copy"><p className="eyebrow"><span/><L en="Manakottukavu Trust" ml="മനക്കോട്ടുകാവ് ട്രസ്റ്റ്"/></p><h1><L en={<>Temple renovation<br/><em>details</em></>} ml={<>ക്ഷേത്ര പുനരുദ്ധാരണ<br/><em>വിവരങ്ങൾ</em></>}/></h1><p><L en="The history, vision, ongoing work, sponsorship opportunities, and official committee information for the Manakottukavu restoration project." ml="മനക്കോട്ടുകാവ് പുനരുദ്ധാരണ പദ്ധതിയുടെ ചരിത്രം, സങ്കൽപ്പം, പുരോഗതി, സ്പോൺസർഷിപ്പ് അവസരങ്ങൾ, ഔദ്യോഗിക സമിതി വിവരങ്ങൾ."/></p></div><img src={`${mediaHost}/gallery/renewal-model.jpg`} alt="Proposed Manakottukavu temple model"/></section>
 
     <section className="fade-carousel" aria-label="Renovation progress photographs"><div className="carousel-stage">{slides.map((src, i) => <img key={src} src={src} alt={`Manakottukavu renovation photograph ${i+1}`} className={i === slide ? "active" : ""}/>)}</div><div className="carousel-caption"><div><span>{String(slide+1).padStart(2,"0")} / {slides.length}</span><b><L en="The temple and its continuing restoration journey" ml="ക്ഷേത്രവും തുടരുന്ന പുനരുദ്ധാരണ യാത്രയും"/></b></div><div className="carousel-controls"><button onClick={() => setSlide((slide - 1 + slides.length) % slides.length)} aria-label="Previous image">←</button><button onClick={() => setSlide((slide + 1) % slides.length)} aria-label="Next image">→</button></div></div></section>
 
