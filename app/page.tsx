@@ -2,41 +2,55 @@
 
 import { useEffect, useState } from "react";
 
-const mediaHost = "https://manakottukavu-renewal.nipunmohanan.chatgpt.site";
-const slides = Array.from({ length: 18 }, (_, i) => `${mediaHost}/renovation/carousel/${String(i + 1).padStart(2, "0")}.jpeg`);
-const documentPages = Array.from({ length: 12 }, (_, i) => `${mediaHost}/renovation/document/page-${String(i + 1).padStart(2, "0")}.jpg`);
+const facebookUrl = "https://www.facebook.com/people/%E0%B4%AE%E0%B4%A8%E0%B4%95%E0%B5%8D%E0%B4%95%E0%B5%8B%E0%B4%9F%E0%B5%8D%E0%B4%9F%E0%B5%81%E0%B4%95%E0%B4%BE%E0%B4%B5%E0%B5%8D-%E0%B4%AE%E0%B5%81%E0%B4%B3%E0%B5%8D%E0%B4%B3%E0%B5%82%E0%B5%BC%E0%B4%95%E0%B5%8D%E0%B4%95%E0%B4%B0/100089469818723/";
 
-const sponsorships = [
-  ["Karinkal pillar", "കരിങ്കൽ തൂൺ", "₹25,000"], ["Door", "പുനർദ്വാരം", "₹45,000"], ["Sopanam", "സോപാനം", "₹35,000"],
-  ["Roof beam / Vaarli", "ഓട് വാർളി", "₹15,500"], ["Stone", "കല്ല്", "₹25,000"], ["Wall stone", "ഭിത്തിക്കല്ല്", "₹5,000"],
-  ["Floor stone", "തറ വിരിപ്പുകല്ല്", "₹5,000"], ["Utharam", "ഉത്തരം", "₹15,000"], ["Roof tile with battens", "കഴുക്കോൽ (കൊത്തുപണിയോടുകൂടി)", "₹12,000"],
-  ["Mukhappu", "മുഖപ്പ്", "₹1,00,000"], ["Exterior wall", "പുറമതിൽ", "₹25,000"],
-];
+const offerings = [
+  ["Valiya Shakteyam (Kalasham)", "വലിയ ശാക്തേയം (കലശം)", "₹2,800"], ["Shakteyam (Kalasham)", "ശാക്തേയം (കലശം)", "₹500"],
+  ["Maha Guruthi Pooja", "മഹാ ഗുരുതിപൂജ", "₹3,000"], ["Vilakku", "വിളക്ക്", "₹10"], ["Ghee Lamp", "നെയ്യ് വിളക്ക്", "₹25"],
+  ["Garland", "മാല", "₹10"], ["Pushpanjali", "പുഷ്പാഞ്ജലി", "₹10"], ["Raktha Pushpanjali", "രക്ത പുഷ്പാഞ്ജലി", "₹15"],
+  ["Mangalya Pushpanjali", "മംഗല്യ പുഷ്പാഞ്ജലി", "₹15"], ["Shathrusamhara Pushpanjali", "ശത്രുസംഹാര പുഷ്പാഞ്ജലി", "₹50"],
+  ["Guruthi Pushpanjali", "ഗുരുതി പുഷ്പാഞ്ജലി", "₹50"], ["Muttirakkal", "മുട്ടിറക്കൽ", "₹10", "Please bring a coconut", "ഒരു തേങ്ങ കൊണ്ടുവരണം"],
+  ["Kumkumarchana", "കുങ്കുമാർച്ചന", "₹25"], ["Poomoodal", "പൂമൂടൽ", "₹1,000"], ["Lighting the Deepastambham", "ദീപസ്തംഭം തെളിയിക്കൽ", "₹150"],
+  ["Malar Nivedyam", "മലർ നിവേദ്യം", "₹25"], ["Thrimadhuram", "ത്രിമധുരം", "₹25"], ["Jaggery Payasam", "ശർക്കര പായസം", "₹50"],
+  ["Kadum Payasam", "കടുംപായസം", "₹100"], ["Milk Payasam", "പാൽപായസം", "₹70"], ["Vella Nivedyam", "വെള്ള നിവേദ്യം", "₹15"],
+  ["Niramala", "നിറമാല", "₹500"], ["Chuttu Vilakku", "ചുറ്റുവിളക്ക്", "₹1,500"], ["Bhagavathi Seva", "ഭഗവത്‌സേവ", "₹150"],
+  ["Choroonu", "ചോറൂണ്", "₹50"], ["Vivaham", "വിവാഹം", "₹150"], ["Nel Para", "നെൽ പറ", "₹250"],
+  ["Thiruvudayada Charthal", "തിരുവുടയാട ചാർത്തൽ", "₹50"], ["Vehicle Pooja", "വാഹന പൂജ", "₹50"], ["Ezhuthiniruthal", "എഴുത്തിനിരുത്തൽ", "₹50"],
+  ["Kalabhabhishekam", "കളഭാഭിഷേകം", "₹25"], ["Palabhishekam", "പാലഭിഷേകം", "₹25"], ["Honey Abhishekam", "തേൻ അഭിഷേകം", "₹100"],
+  ["Kali Sahasranamarchana", "കാളി സഹസ്രനാമാർച്ചന", "₹100"], ["Tender Coconut Abhishekam", "ഇളനീർ അഭിഷേകം", "₹10", "Please bring a tender coconut", "ഇളനീർ കൊണ്ടുവരണം"],
+  ["Turmeric Powder Abhishekam", "മഞ്ഞൾപ്പൊടി അഭിഷേകം", "₹50"], ["Lemon Garland", "നാരങ്ങമാല", null], ["Lemon Lamp", "നാരങ്ങ വിളക്ക്", null], ["Kedavilakku", "കെടാവിളക്ക്", "₹100"],
+] as const;
 
-export default function RenovationPage() {
+export default function Home() {
   const [lang, setLang] = useState<"en" | "ml">("en");
-  const [slide, setSlide] = useState(0);
-  useEffect(() => { document.documentElement.lang = lang; }, [lang]);
-  useEffect(() => { const id = window.setInterval(() => setSlide(s => (s + 1) % slides.length), 4800); return () => window.clearInterval(id); }, []);
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && entry.target.classList.add("is-visible")), { threshold: .08 });
+    document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, [lang]);
   const L = ({ en, ml }: { en: React.ReactNode; ml: React.ReactNode }) => <>{lang === "en" ? en : ml}</>;
 
-  return <main className={`renovation-page language-${lang}`}>
-    <header className="site-header subpage-header"><a className="brand" href="/"><span className="brand-mark">✦</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ് · മുള്ളൂർക്കര</small></span></a><nav><a href="/"><L en="Home" ml="ഹോം"/></a><a href="/#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="#details"><L en="Project details" ml="പദ്ധതി വിവരങ്ങൾ"/></a><a href="#document"><L en="Full document" ml="പൂർണ്ണ രേഖ"/></a></nav><button className="language-toggle" onClick={() => setLang(lang === "en" ? "ml" : "en")}><span className={lang === "en" ? "active" : ""}>EN</span><i/><span className={lang === "ml" ? "active" : ""}>മ</span></button></header>
+  return <main className={`language-${lang}`}>
+    <header className="site-header home-header">
+      <a className="brand" href="#home"><span className="brand-mark">✦</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ് · മുള്ളൂർക്കര</small></span></a>
+      <nav aria-label="Primary navigation"><a href="#home"><L en="Home" ml="ഹോം"/></a><a href="#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="#contact"><L en="Contact" ml="ബന്ധപ്പെടുക"/></a><a href="/renovation"><L en="Renovation" ml="പുനരുദ്ധാരണം"/></a></nav>
+      <button className="language-toggle" onClick={() => setLang(lang === "en" ? "ml" : "en")} aria-label="Change language"><span className={lang === "en" ? "active" : ""}>EN</span><i/><span className={lang === "ml" ? "active" : ""}>മ</span></button>
+    </header>
 
-    <section className="renovation-hero"><div className="renovation-hero-copy"><p className="eyebrow"><span/><L en="Manakottukavu Trust" ml="മനക്കോട്ടുകാവ് ട്രസ്റ്റ്"/></p><h1><L en={<>Temple renovation<br/><em>details</em></>} ml={<>ക്ഷേത്ര പുനരുദ്ധാരണ<br/><em>വിവരങ്ങൾ</em></>}/></h1><p><L en="The history, vision, ongoing work, sponsorship opportunities, and official committee information for the Manakottukavu restoration project." ml="മനക്കോട്ടുകാവ് പുനരുദ്ധാരണ പദ്ധതിയുടെ ചരിത്രം, സങ്കൽപ്പം, പുരോഗതി, സ്പോൺസർഷിപ്പ് അവസരങ്ങൾ, ഔദ്യോഗിക സമിതി വിവരങ്ങൾ."/></p></div><img src={`${mediaHost}/gallery/renewal-model.jpg`} alt="Proposed Manakottukavu temple model"/></section>
+    <section className="hero minimal-hero" id="home">
+      <div className="hero-visual"><img src="https://manakottukavu-renewal.nipunmohanan.chatgpt.site/renovation/carousel/12.jpeg" alt="Manakottukavu temple in Mullurkkara"/><div className="hero-shade"/></div>
+      <div className="hero-copy reveal"><p className="eyebrow"><span/><L en="Palayam Devaswom · Mullurkkara" ml="പാലയം ദേവസ്വം · മുള്ളൂർക്കര"/></p><h1><L en={<>Manakottukavu<br/><em>Temple</em></>} ml={<>മനക്കോട്ടുകാവ്<br/><em>ക്ഷേത്രം</em></>}/></h1><p className="hero-lead"><L en="A peaceful Bhagavathi shrine in Mullurkkara, Thrissur — rooted in devotion, tradition, and community." ml="തൃശ്ശൂർ മുള്ളൂർക്കരയിലെ ഭക്തിയുടെയും പാരമ്പര്യത്തിന്റെയും കൂട്ടായ്മയുടെയും ശാന്തമായ ഭഗവതിസന്നിധി."/></p></div>
+      <div className="hero-timings"><div><span><L en="Morning worship" ml="രാവിലെ ദർശനം"/></span><strong><L en="Call for today’s timing" ml="ഇന്നത്തെ സമയം അറിയാൻ വിളിക്കുക"/></strong></div><div><span><L en="Evening worship" ml="വൈകുന്നേരം ദർശനം"/></span><strong><L en="Call for today’s timing" ml="ഇന്നത്തെ സമയം അറിയാൻ വിളിക്കുക"/></strong></div><div><span><L en="Temple contact" ml="ക്ഷേത്ര ബന്ധപ്പെടൽ"/></span><strong><a href="tel:+918129026387">+91 81290 26387</a></strong></div></div>
+    </section>
 
-    <section className="fade-carousel" aria-label="Renovation progress photographs"><div className="carousel-stage">{slides.map((src, i) => <img key={src} src={src} alt={`Manakottukavu renovation photograph ${i+1}`} className={i === slide ? "active" : ""}/>)}</div><div className="carousel-caption"><div><span>{String(slide+1).padStart(2,"0")} / {slides.length}</span><b><L en="The temple and its continuing restoration journey" ml="ക്ഷേത്രവും തുടരുന്ന പുനരുദ്ധാരണ യാത്രയും"/></b></div><div className="carousel-controls"><button onClick={() => setSlide((slide - 1 + slides.length) % slides.length)} aria-label="Previous image">←</button><button onClick={() => setSlide((slide + 1) % slides.length)} aria-label="Next image">→</button></div></div></section>
+    <section className="offerings-section minimal-offerings" id="offerings">
+      <div className="section-heading reveal"><div><p className="section-kicker light"><L en="Vazhipadu" ml="വഴിപാടുകൾ"/></p><h2><L en={<>Temple <em>offerings</em></>} ml={<>ക്ഷേത്ര <em>വഴിപാടുകൾ</em></>}/></h2></div><p><L en="Current offering list and rates supplied by the temple committee." ml="ക്ഷേത്രസമിതി നൽകിയ നിലവിലെ വഴിപാട് പട്ടികയും നിരക്കുകളും."/></p></div>
+      <div className="offering-grid">{offerings.map((o, i) => <article className="offering-card reveal" key={o[0]}><div className="offering-top"><span>{String(i+1).padStart(2,"0")}</span><b>{o[1]}</b></div><h3>{lang === "en" ? o[0] : o[1]}</h3>{o[3] && <p>{lang === "en" ? o[3] : o[4]}</p>}<div className="offering-bottom"><strong>{o[2] ?? <L en="Enquire" ml="അന്വേഷിക്കുക"/>}</strong><a href="tel:+918129026387"><L en="Call to book" ml="ബുക്ക് ചെയ്യാൻ വിളിക്കുക"/></a></div></article>)}</div>
+    </section>
 
-    <section className="renovation-details" id="details"><div className="details-intro"><p className="section-kicker"><L en="Project overview" ml="പദ്ധതി അവലോകനം"/></p><h2><L en="Preserving a living sacred tradition" ml="ജീവിക്കുന്ന ദേവപാരമ്പര്യത്തിന്റെ സംരക്ഷണം"/></h2></div><div className="details-copy"><p><L en="Manakottukavu is an ancient sacred grove and Bhagavathi shrine at Mullurkkara under Palayam Devaswom. The temple tradition centres on Bhairavi, Kalabhairava and associated guardian deities. The document traces the shrine’s long connection with the locality, traditional worship, sacred trees, and regional history." ml="പാലയം ദേവസ്വത്തിന് കീഴിലുള്ള മുള്ളൂർക്കരയിലെ പുരാതന കാവും ഭഗവതിസന്നിധിയുമാണ് മനക്കോട്ടുകാവ്. ഭൈരവി, കാലഭൈരവൻ, ഉപദേവതകൾ എന്നിവരുടെ ആരാധനാപാരമ്പര്യവും ദേശചരിത്രവുമായുള്ള ദീർഘബന്ധവും രേഖയിൽ വിവരിക്കുന്നു."/></p><p><L en="An Ashtamangala Prasnam identified the need to restore the shrine according to traditional principles. The project includes rebuilding and strengthening the sanctum, stone and timber work, roof, sopanam, pradakshina paths, compound structures, and associated sacred spaces while retaining the temple’s Kerala character." ml="അഷ്ടമംഗല പ്രശ്നനിർദേശപ്രകാരം ശ്രീകോവിൽ, കൽ-മരപ്പണികൾ, മേൽക്കൂര, സോപാനം, പ്രദക്ഷിണവഴികൾ, ചുറ്റുമതിൽ, അനുബന്ധ പുണ്യസ്ഥാനങ്ങൾ എന്നിവ കേരളീയ ക്ഷേത്രതനിമ നിലനിർത്തി പുനർനിർമ്മിക്കുകയും ശക്തിപ്പെടുത്തുകയും ചെയ്യുന്നതാണ് പദ്ധതി."/></p><p><L en="The Manakottukavu Trust was registered in 2025 to coordinate the work. Ritual observances and preparatory ceremonies were conducted under the guidance of temple priests and traditional experts, and restoration work has progressed with the participation of devotees and local residents." ml="പ്രവർത്തനങ്ങൾ ഏകോപിപ്പിക്കാൻ 2025-ൽ മനക്കോട്ടുകാവ് ട്രസ്റ്റ് രജിസ്റ്റർ ചെയ്തു. തന്ത്രി-ആചാര്യന്മാരുടെ മാർഗ്ഗനിർദേശത്തിൽ ആവശ്യമായ കർമ്മങ്ങളും ഒരുക്കങ്ങളും നടത്തി, ഭക്തജനങ്ങളുടെയും നാട്ടുകാരുടെയും പങ്കാളിത്തത്തോടെ പുനരുദ്ധാരണ പ്രവൃത്തികൾ പുരോഗമിക്കുന്നു."/></p></div></section>
+    <section className="contact-section" id="contact"><div><p className="section-kicker"><L en="Visit & contact" ml="സന്ദർശനവും ബന്ധപ്പെടലും"/></p><h2><L en="Manakottukavu, Mullurkkara" ml="മനക്കോട്ടുകാവ്, മുള്ളൂർക്കര"/></h2><p><L en="For current worship timings, offering bookings, and temple information, please contact the temple directly." ml="നിലവിലെ ദർശനസമയം, വഴിപാട് ബുക്കിംഗ്, ക്ഷേത്രവിവരങ്ങൾ എന്നിവയ്ക്ക് ക്ഷേത്രവുമായി നേരിട്ട് ബന്ധപ്പെടുക."/></p><a className="primary-contact" href="tel:+918129026387">+91 81290 26387</a></div><div className="contact-card"><span><L en="Temple committee" ml="ക്ഷേത്ര സമിതി"/></span><a href="tel:+919745822535"><b>Ajish Kumar</b><small><L en="President" ml="പ്രസിഡന്റ്"/> · 97458 22535</small></a><a href="tel:+918848403303"><b>K. Saji</b><small><L en="Secretary" ml="സെക്രട്ടറി"/> · 88484 03303</small></a><a href="tel:+919441270765"><b>K. A. Ashok Kumar</b><small><L en="Treasurer" ml="ട്രഷറർ"/> · 94412 70765</small></a></div></section>
 
-    <section className="sponsorship-section"><div><p className="section-kicker light"><L en="Support the work" ml="പുനരുദ്ധാരണ സഹായം"/></p><h2><L en="Sponsorship opportunities" ml="സ്പോൺസർഷിപ്പ് അവസരങ്ങൾ"/></h2><p><L en="The official project document lists the following suggested sponsorship contributions for major construction elements." ml="പ്രധാന നിർമാണ ഘടകങ്ങൾക്കായി ഔദ്യോഗിക പദ്ധതിപത്രികയിൽ നൽകിയിട്ടുള്ള സംഭാവനാ നിരക്കുകൾ."/></p></div><div className="sponsorship-list">{sponsorships.map((item,i)=><div key={item[0]}><span>{String(i+1).padStart(2,"0")}</span><b>{lang === "en" ? item[0] : item[1]}</b><strong>{item[2]}</strong></div>)}</div></section>
-
-    <section className="bank-section"><div><p className="section-kicker"><L en="Official contribution account" ml="ഔദ്യോഗിക സംഭാവനാ അക്കൗണ്ട്"/></p><h2>MANAKKOTTUKAVU TRUST</h2><p><L en="Please verify the beneficiary name and account details before completing a transfer." ml="പണം അയയ്ക്കുന്നതിനുമുമ്പ് ഗുണഭോക്താവിന്റെ പേരും അക്കൗണ്ട് വിവരങ്ങളും സ്ഥിരീകരിക്കുക."/></p></div><dl><div><dt>Bank</dt><dd>Canara Bank</dd></div><div><dt>Branch</dt><dd>Mullurkkara</dd></div><div><dt>Account No.</dt><dd>120034790166</dd></div><div><dt>IFSC</dt><dd>CNRB0004213</dd></div><div><dt>SWIFT</dt><dd>CNRBINBBFD</dd></div><div><dt>Contact</dt><dd><a href="tel:+918129026387">81290 26387</a></dd></div></dl></section>
-
-    <section className="committee-section"><p className="section-kicker"><L en="Trust leadership" ml="ട്രസ്റ്റ് നേതൃത്വം"/></p><h2><L en="Official contacts" ml="ഔദ്യോഗിക ബന്ധപ്പെടൽ"/></h2><div><a href="tel:+919745822535"><span><L en="President" ml="പ്രസിഡന്റ്"/></span><b>Ajish Kumar</b><strong>97458 22535</strong></a><a href="tel:+918848403303"><span><L en="Secretary" ml="സെക്രട്ടറി"/></span><b>K. Saji</b><strong>88484 03303</strong></a><a href="tel:+919441270765"><span><L en="Treasurer" ml="ട്രഷറർ"/></span><b>K. A. Ashok Kumar</b><strong>94412 70765</strong></a></div></section>
-
-    <section className="document-section" id="document"><div className="document-heading"><p className="section-kicker"><L en="Complete source document" ml="പൂർണ്ണ ഔദ്യോഗിക രേഖ"/></p><h2><L en="Renovation project booklet" ml="പുനരുദ്ധാരണ പദ്ധതി രേഖ"/></h2><p><L en="All 12 pages of the supplied Malayalam booklet are reproduced below so the full history, ritual account, project notes, sponsorship information, and committee details remain available exactly as provided." ml="ലഭിച്ച മലയാളം പുസ്തികയുടെ 12 പേജുകളും താഴെ പൂർണ്ണമായി നൽകിയിരിക്കുന്നു. ചരിത്രം, ആചാരവിവരണം, പദ്ധതിനോട്ടുകൾ, സ്പോൺസർഷിപ്പ്, സമിതി വിവരങ്ങൾ എന്നിവ യഥാർത്ഥരൂപത്തിൽ ലഭ്യമാണ്."/></p></div><div className="document-pages">{documentPages.map((src,i)=><figure key={src}><img src={src} alt={`Manakottukavu renovation booklet page ${i+1}`} loading="lazy"/><figcaption><L en={`Page ${i+1}`} ml={`പേജ് ${i+1}`}/></figcaption></figure>)}</div></section>
-
-    <footer><a className="brand" href="/"><span className="brand-mark">✦</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ് · മുള്ളൂർക്കര</small></span></a><p><L en="Palayam Devaswom, Mullurkkara, Thrissur, Kerala." ml="പാലയം ദേവസ്വം, മുള്ളൂർക്കര, തൃശ്ശൂർ, കേരളം."/></p><div><a href="/">Home</a><a href="/#offerings">Offerings</a><a href="tel:+918129026387">Contact</a></div><small>© {new Date().getFullYear()} Manakottukavu Trust</small></footer>
+    <footer><a className="brand" href="#home"><span className="brand-mark">✦</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ് · മുള്ളൂർക്കര</small></span></a><p><L en="Palayam Devaswom, Mullurkkara, Thrissur, Kerala." ml="പാലയം ദേവസ്വം, മുള്ളൂർക്കര, തൃശ്ശൂർ, കേരളം."/></p><div><a href="#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="/renovation"><L en="Renovation" ml="പുനരുദ്ധാരണം"/></a><a href={facebookUrl} target="_blank" rel="noreferrer">Facebook</a></div><small>© {new Date().getFullYear()} Manakottukavu</small></footer>
   </main>;
 }
