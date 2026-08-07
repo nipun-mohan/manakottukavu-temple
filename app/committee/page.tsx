@@ -4,6 +4,12 @@ import { CSSProperties, useEffect, useState } from "react";
 
 const committeeSource = "https://manakottukavu.nipunmohanan.workers.dev/media/renovation/document/page-12.jpg";
 
+const templeRepresentatives = [
+  { image: "trustee", x: "19.1%", y: "12.2%", en: "P. Venugopalanunni", ml: "പി. വേണുഗോപാലനുണ്ണി", roleEn: "Trustee", roleMl: "ട്രസ്റ്റി" },
+  { image: "tantri", x: "49.4%", y: "12.2%", en: "Balakrishnan Vai", ml: "ബാലകൃഷ്ണൻ വൈ", roleEn: "Kavu Tantri", roleMl: "കാവ് തന്ത്രി" },
+  { image: "poojari", x: "81.2%", y: "12.2%", en: "Muraleedharan Irakkode", ml: "മുരളീധരൻ ഇരക്കോട്", roleEn: "Kavu Poojari", roleMl: "കാവ് പൂജാരി" },
+];
+
 const executive = [
   { image: "ajish-kumar", x: "12.5%", y: "37.2%", en: "Ajish Kumar", ml: "അജേഷ് കുമാർ", roleEn: "President", roleMl: "പ്രസിഡന്റ്" },
   { image: "ratheesh-p", x: "31.6%", y: "37.2%", en: "Ratheesh P.", ml: "രതീഷ് പി", roleEn: "Vice President", roleMl: "വൈസ് പ്രസിഡന്റ്" },
@@ -39,11 +45,12 @@ export default function CommitteePage() {
   return <main className={`committee-page language-${lang}`}>
     <header className="site-header subpage-header"><a className="brand" href="/"><span className="brand-mark" aria-hidden="true">ॐ</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ്</small></span></a><nav aria-label="Primary navigation"><a href="/"><L en="Home" ml="ഹോം"/></a><a href="/#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="/committee" aria-current="page"><L en="Temple Committee" ml="ക്ഷേത്ര കമ്മിറ്റി"/></a><a href="/renovation"><L en="Renovation" ml="പുനരുദ്ധാരണം"/></a><a href="/#contact"><L en="Contact" ml="ബന്ധപ്പെടുക"/></a></nav><button className="language-toggle" onClick={() => setLang(lang === "en" ? "ml" : "en")} aria-label="Change language"><span className={lang === "en" ? "active" : ""}>EN</span><i/><span className={lang === "ml" ? "active" : ""}>മ</span></button></header>
 
-    <section className="committee-hero"><p className="section-kicker"><L en="Temple administration" ml="ക്ഷേത്ര ഭരണസമിതി"/></p><h1><L en="Temple Committee" ml="ക്ഷേത്ര കമ്മിറ്റി"/></h1><p><L en="The Manakottukavu Trust executive committee and committee members, as listed in the official project booklet." ml="ഔദ്യോഗിക പദ്ധതി പുസ്തികയിൽ നൽകിയിട്ടുള്ള മനക്കോട്ടുകാവ് ട്രസ്റ്റ് എക്സിക്യൂട്ടീവ് കമ്മിറ്റിയും കമ്മിറ്റി അംഗങ്ങളും."/></p></section>
+    <section className="committee-hero"><p className="section-kicker"><L en="Temple administration" ml="ക്ഷേത്ര ഭരണസമിതി"/></p><h1><L en="Temple Committee" ml="ക്ഷേത്ര കമ്മിറ്റി"/></h1></section>
 
     <section className="committee-groups">
-      <div className="committee-group"><div className="committee-group-heading"><span>01</span><h2><L en="Executive Committee" ml="എക്സിക്യൂട്ടീവ് കമ്മിറ്റി"/></h2></div><div className="committee-grid executive-grid">{executive.map(card)}</div></div>
-      <div className="committee-group"><div className="committee-group-heading"><span>02</span><h2><L en="Committee Members" ml="കമ്മിറ്റി അംഗങ്ങൾ"/></h2></div><div className="committee-grid">{members.map(card)}</div></div>
+      <div className="committee-group"><div className="committee-group-heading"><span>01</span><h2><L en="Temple Representatives" ml="ക്ഷേത്ര പ്രതിനിധികൾ"/></h2></div><div className="committee-grid representative-grid">{templeRepresentatives.map(card)}</div></div>
+      <div className="committee-group"><div className="committee-group-heading"><span>02</span><h2><L en="Executive Committee" ml="എക്സിക്യൂട്ടീവ് കമ്മിറ്റി"/></h2></div><div className="committee-grid executive-grid">{executive.map(card)}</div></div>
+      <div className="committee-group"><div className="committee-group-heading"><span>03</span><h2><L en="Committee Members" ml="കമ്മിറ്റി അംഗങ്ങൾ"/></h2></div><div className="committee-grid">{members.map(card)}</div></div>
     </section>
 
     <footer><a className="brand" href="/"><span className="brand-mark" aria-hidden="true">ॐ</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ്</small></span></a><p><L en="Palayam Devaswom, Mullurkkara, Thrissur, Kerala." ml="പാലയം ദേവസ്വം, മുള്ളൂർക്കര, തൃശ്ശൂർ, കേരളം."/></p><div><a href="/"><L en="Home" ml="ഹോം"/></a><a href="/#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="/renovation"><L en="Renovation" ml="പുനരുദ്ധാരണം"/></a></div><small>© {new Date().getFullYear()} Manakottukavu Trust</small></footer>
