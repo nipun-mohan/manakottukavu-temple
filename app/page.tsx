@@ -50,9 +50,9 @@ export default function Home() {
     </header>
 
     <section className="hero minimal-hero" id="home">
-      <div className="hero-visual"><img src="/temple-hero-ai.png" alt="Enhanced view based on the real Manakottukavu temple photograph"/><div className="hero-shade"/></div>
+      <div className="hero-visual"><img src="/temple-hero-nature.png" alt="Manakottukavu temple surrounded by Kerala greenery"/><div className="hero-shade"/></div>
       <div className="hero-copy reveal"><p className="eyebrow"><span/><L en="Palayam Devaswom" ml="പാലയം ദേവസ്വം"/></p><h1><L en={<>Manakottukavu<br/>Temple</>} ml={<>മനക്കോട്ടുകാവ്<br/>ക്ഷേത്രം</>}/></h1><p className="hero-lead"><L en="A peaceful Bhagavathi shrine rooted in devotion, tradition, and community." ml="ഭക്തിയുടെയും പാരമ്പര്യത്തിന്റെയും കൂട്ടായ്മയുടെയും ശാന്തമായ ഭഗവതിസന്നിധി."/></p></div>
-      <div className="hero-timings"><div><span><L en="Morning worship" ml="രാവിലെ ദർശനം"/></span><strong><L en="Call for today’s timing" ml="ഇന്നത്തെ സമയം അറിയാൻ വിളിക്കുക"/></strong></div><div><span><L en="Evening worship" ml="വൈകുന്നേരം ദർശനം"/></span><strong><L en="Call for today’s timing" ml="ഇന്നത്തെ സമയം അറിയാൻ വിളിക്കുക"/></strong></div></div>
+      <div className="hero-timings"><h2><L en="Temple Timing" ml="ക്ഷേത്ര സമയം"/></h2><dl><div><dt><L en="Morning" ml="രാവിലെ"/></dt><dd>04:30 AM - 11:30 AM</dd></div><div><dt><L en="Evening" ml="വൈകുന്നേരം"/></dt><dd>04:00 PM - 08:00 PM</dd></div></dl></div>
     </section>
 
     <button className="whatsapp-fab" onClick={() => setBookingOpen(true)} aria-label={lang === "en" ? "Book a pooja on WhatsApp" : "വാട്സ്ആപ്പിൽ പൂജ ബുക്ക് ചെയ്യുക"}><span className="wa-mark">WA</span><b><L en="Book Pooja" ml="പൂജ ബുക്ക് ചെയ്യുക"/></b></button>
