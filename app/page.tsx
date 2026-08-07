@@ -39,8 +39,8 @@ export default function Home() {
     </header>
 
     <section className="hero minimal-hero" id="home">
-      <div className="hero-visual"><img src="https://manakottukavu.nipunmohanan.workers.dev/media/renovation/carousel/11.jpeg" alt="Manakottukavu temple in Mullurkkara"/><div className="hero-shade"/></div>
-      <div className="hero-copy reveal"><p className="eyebrow"><span/><L en="Palayam Devaswom" ml="പാലയം ദേവസ്വം"/></p><h1><L en={<>Manakottukavu<br/>Temple</>} ml={<>മനക്കോട്ടുകാവ്<br/>ക്ഷേത്രം</>}/></h1><p className="hero-lead"><L en="A peaceful Bhagavathi shrine rooted in devotion, tradition, and community." ml="ഭക്തിയുടെയും പാരമ്പര്യത്തിന്റെയും കൂട്ടായ്മയുടെയും ശാന്തമായ ഭഗവതിസന്നിധി."/></p></div>
+      <div className="hero-visual"><img src="https://manakottukavu.nipunmohanan.workers.dev/media/renovation/carousel/12.jpeg" alt="Front view of Manakottukavu temple in Mullurkkara"/><div className="hero-shade"/></div>
+      <div className="hero-copy reveal"><p className="eyebrow"><span/><L en="Palayam Devaswom" ml="പാലയം ദേവസ്വം"/></p><h1><L en={<>Manakottukavu<br/>Temple</>} ml={<>മനക്കോട്ടുകാവ്<br/>ക്ഷേത്രം</>}/></h1><p className="hero-lead"><L en="A peaceful Bhagavathi shrine rooted in devotion, tradition, and community." ml="ഭക്തിയുടെയും പാരമ്പര്യത്തിന്റെയും കൂട്ടായ്മയുടെയും ശാന്തമായ ഭഗവതിസന്നിധി."/></p><div className="hero-actions"><a className="hero-primary" href="#offerings"><L en="View offerings" ml="വഴിപാടുകൾ കാണുക"/> <span>→</span></a><a className="hero-secondary" href="/renovation"><L en="Renovation details" ml="പുനരുദ്ധാരണ വിവരങ്ങൾ"/></a></div></div>
       <div className="hero-timings"><div><span><L en="Morning worship" ml="രാവിലെ ദർശനം"/></span><strong><L en="Call for today’s timing" ml="ഇന്നത്തെ സമയം അറിയാൻ വിളിക്കുക"/></strong></div><div><span><L en="Evening worship" ml="വൈകുന്നേരം ദർശനം"/></span><strong><L en="Call for today’s timing" ml="ഇന്നത്തെ സമയം അറിയാൻ വിളിക്കുക"/></strong></div><div><span><L en="Temple contact" ml="ക്ഷേത്ര ബന്ധപ്പെടൽ"/></span><strong><a href="tel:+918129026387">+91 81290 26387</a></strong></div></div>
     </section>
 
