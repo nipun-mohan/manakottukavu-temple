@@ -127,3 +127,14 @@ em,i{font-style:normal;color:inherit}
 .sponsorship-list strong{white-space:nowrap}
 
 @media(max-width:760px){.minimal-hero h1{font-size:42px}.renovation-hero h1{font-size:38px}.intro h2,.section-heading h2,.contact-section h2,.details-intro h2,.sponsorship-section h2,.bank-section h2,.committee-section h2,.document-section h2{font-size:32px}.sponsorship-section{grid-template-columns:1fr}.sponsorship-list>div{grid-template-columns:28px minmax(0,1fr) max-content;gap:10px;padding:14px 12px}.sponsorship-list strong{font-size:16px}}
+
+/* Navigation and responsive alignment refinement */
+.site-header,.home-header,.subpage-header{position:fixed;top:18px;left:5vw;right:5vw;z-index:50;background:rgba(250,246,238,.78);border:1px solid rgba(93,36,36,.16);box-shadow:0 8px 28px rgba(45,27,20,.08);backdrop-filter:blur(22px) saturate(145%);-webkit-backdrop-filter:blur(22px) saturate(145%)}
+.site-header .brand b,.site-header nav,.site-header nav a{color:#3b2925;text-shadow:0 1px 0 rgba(255,255,255,.45)}
+.site-header .brand small{color:#685852}
+.language-toggle{background:rgba(255,250,243,.72);border-color:rgba(93,36,36,.18)}
+.minimal-hero{border-radius:0}
+.section-heading{justify-content:flex-start}
+
+@media(max-width:1180px){.sponsorship-section{grid-template-columns:1fr;gap:28px}.sponsorship-section>div:first-child{width:100%;padding:26px}.sponsorship-list{width:100%}.sponsorship-list>div{width:100%;grid-template-columns:34px minmax(0,1fr) max-content}.sponsorship-list strong{display:block;color:var(--wine);white-space:nowrap}}
+@media(max-width:760px){.site-header,.home-header,.subpage-header{top:12px;left:14px;right:14px}.sponsorship-list>div{grid-template-columns:26px minmax(0,1fr) max-content}.sponsorship-list strong{font-size:15px}}
