@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, DM_Sans, Noto_Sans_Malayalam } from "next/font/google";
+import { Marcellus, Manrope, Noto_Sans_Malayalam } from "next/font/google";
 import "./globals.css";
 
-const display = Cormorant_Garamond({ variable: "--font-display", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
-const sans = DM_Sans({ variable: "--font-sans", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+const display = Marcellus({ variable: "--font-display", subsets: ["latin"], weight: "400" });
+const sans = Manrope({ variable: "--font-sans", subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 const malayalam = Noto_Sans_Malayalam({ variable: "--font-malayalam", subsets: ["malayalam"], weight: ["400", "600"] });
 
 export const metadata: Metadata = {
