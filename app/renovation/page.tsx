@@ -18,6 +18,20 @@ export default function RenovationPage() {
   const [slide, setSlide] = useState(0);
   const [openPage, setOpenPage] = useState<number | null>(null);
   useEffect(() => { document.documentElement.lang = lang; }, [lang]);
+  useEffect(() => {
+    const restoreLanguage = () => {
+      const saved = window.localStorage.getItem("manakottukavu-language");
+      if (saved === "en" || saved === "ml") setLang(saved);
+    };
+    restoreLanguage();
+    window.addEventListener("storage", restoreLanguage);
+    return () => window.removeEventListener("storage", restoreLanguage);
+  }, []);
+  const toggleLanguage = () => setLang(current => {
+    const next = current === "en" ? "ml" : "en";
+    window.localStorage.setItem("manakottukavu-language", next);
+    return next;
+  });
   useEffect(() => { const id = window.setInterval(() => setSlide(s => (s + 1) % slides.length), 4800); return () => window.clearInterval(id); }, []);
   useEffect(() => {
     if (openPage === null) return;
@@ -29,7 +43,7 @@ export default function RenovationPage() {
   const L = ({ en, ml }: { en: React.ReactNode; ml: React.ReactNode }) => <>{lang === "en" ? en : ml}</>;
 
   return <main className={`renovation-page language-${lang}`}>
-    <header className="site-header subpage-header"><a className="brand" href="/"><span className="brand-mark" aria-hidden="true">ॐ</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ്</small></span></a><nav><a href="/"><L en="Home" ml="ഹോം"/></a><a href="/#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="/committee"><L en="Temple Committee" ml="ക്ഷേത്ര കമ്മിറ്റി"/></a><a href="#details"><L en="Project details" ml="പദ്ധതി വിവരങ്ങൾ"/></a><a href="#document"><L en="Project Booklet" ml="പദ്ധതി പുസ്തിക"/></a></nav><button className="language-toggle" onClick={() => setLang(lang === "en" ? "ml" : "en")} aria-label="Change language"><span className={lang === "en" ? "active" : ""}>EN</span><i/><span className={lang === "ml" ? "active" : ""}>മ</span></button></header>
+    <header className="site-header subpage-header"><a className="brand" href="/"><span className="brand-mark" aria-hidden="true">ॐ</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ്</small></span></a><nav><a href="/"><L en="Home" ml="ഹോം"/></a><a href="/#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="/committee"><L en="Temple Committee" ml="ക്ഷേത്ര കമ്മിറ്റി"/></a><a href="#details"><L en="Project details" ml="പദ്ധതി വിവരങ്ങൾ"/></a><a href="#document"><L en="Project Booklet" ml="പദ്ധതി പുസ്തിക"/></a></nav><button className="language-toggle" onClick={toggleLanguage} aria-label="Change language"><span className={lang === "en" ? "active" : ""}>EN</span><i/><span className={lang === "ml" ? "active" : ""}>മ</span></button></header>
 
     <section className="renovation-hero"><div className="renovation-hero-copy"><p className="eyebrow"><span/><L en="Manakottukavu Trust" ml="മനക്കോട്ടുകാവ് ട്രസ്റ്റ്"/></p><h1><L en={<>Temple renovation<br/>details</>} ml={<>ക്ഷേത്ര പുനരുദ്ധാരണ<br/>വിവരങ്ങൾ</>}/></h1></div><div className="renovation-hero-media"><img src={`${mediaHost}/gallery/renewal-model.jpg`} alt="Proposed Manakottukavu temple model"/></div></section>
 
