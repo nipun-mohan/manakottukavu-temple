@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 const templeRepresentatives = [
-  { image: "trustee", en: "Sri. P Venugopalanachan", ml: "പി. വേണുഗോപാലനുണ്ണി", roleEn: "Trustee", roleMl: "ഊരാളൻ" },
+  { image: "trustee", en: "Sri. P. Venugopalanachan", ml: "പി. വേണുഗോപാലനുണ്ണി", roleEn: "Trustee", roleMl: "ഊരാളൻ" },
   { image: "tantri", en: "Sri. Balakrishna Pai", ml: "ബാലകൃഷ്ണൻ വൈ", roleEn: "Kavu Tantri", roleMl: "കാവ് തന്ത്രി" },
   { image: "poojari", en: "Sri. Muraleedharan Erakkatt", ml: "മുരളീധരൻ ഇരക്കോട്", roleEn: "Kavu Poojari", roleMl: "കാവ് പൂജാരി" },
 ];
@@ -11,22 +11,22 @@ const templeRepresentatives = [
 const executive = [
   { image: "ajish-kumar", en: "Ajesh Kumar", ml: "അജേഷ് കുമാർ", roleEn: "President", roleMl: "പ്രസിഡന്റ്" },
   { image: "ratheesh-p", en: "Ratheesh P.", ml: "രതീഷ് പി", roleEn: "Vice President", roleMl: "വൈസ് പ്രസിഡന്റ്" },
-  { image: "k-ravi", en: "K Ravi", ml: "കെ. രവി", roleEn: "Secretary", roleMl: "സെക്രട്ടറി" },
+  { image: "k-ravi", en: "K. Ravi", ml: "കെ. രവി", roleEn: "Secretary", roleMl: "സെക്രട്ടറി" },
   { image: "suresh-shankar", en: "Suresh Shankar", ml: "സുരേഷ് ശങ്കർ", roleEn: "Joint Secretary", roleMl: "ജോയിന്റ് സെക്രട്ടറി" },
-  { image: "ka-ashok-kumar", en: "K E Ahsok Kumar", ml: "കെ. എ. അശോക് കുമാർ", roleEn: "Treasurer", roleMl: "ട്രഷറർ" },
+  { image: "ka-ashok-kumar", en: "K. E. Ahsok Kumar", ml: "കെ. എ. അശോക് കുമാർ", roleEn: "Treasurer", roleMl: "ട്രഷറർ" },
 ];
 
 const members = [
   { image: "t-manorama", en: "T. Manorama", ml: "ടി. മനോരമ", roleEn: "Convenor", roleMl: "കൺവീനർ" },
-  { image: "o-balakrishnan", en: "Balakrishnan O", ml: "ബാലകൃഷ്ണൻ ഒ." },
-  { image: "mohan-p", en: "Mohan V", ml: "മോഹൻ പി" },
+  { image: "o-balakrishnan", en: "Balakrishnan O.", ml: "ബാലകൃഷ്ണൻ ഒ." },
+  { image: "mohan-p", en: "Mohan V.", ml: "മോഹൻ പി" },
   { image: "ng-menon", en: "N. G. Menon", ml: "എൻ. ജി. മേനോൻ" },
-  { image: "pk-sreedharan", en: "Sreedharan P K", ml: "ശ്രീധരൻ പി. കെ" },
+  { image: "pk-sreedharan", en: "Sreedharan P. K.", ml: "ശ്രീധരൻ പി. കെ" },
   { image: "shobha-sreedharan", en: "Shobha Shashidharan", ml: "ശോഭ ശ്രീധരൻ" },
-  { image: "vb-manikandan", en: "Mandikandan V B", ml: "മണികണ്ഠൻ വി. ബി" },
-  { image: "r-manoj-kumar", en: "Manoj Kumar R", ml: "മനോജ് കുമാർ ആർ" },
+  { image: "vb-manikandan", en: "Mandikandan V. B.", ml: "മണികണ്ഠൻ വി. ബി" },
+  { image: "r-manoj-kumar", en: "Manoj Kumar R.", ml: "മനോജ് കുമാർ ആർ" },
   { image: "rahul-warrier", en: "Rahul Warrier", ml: "രാഹുൽ വാര്യർ" },
-  { image: "ps-sreenath", en: "Sreenath P S", ml: "ശ്രീനാഥ് പി. എസ്" },
+  { image: "ps-sreenath", en: "Sreenath P. S.", ml: "ശ്രീനാഥ് പി. എസ്" },
 ];
 
 type Person = { image: string; en: string; ml: string; roleEn?: string; roleMl?: string };
