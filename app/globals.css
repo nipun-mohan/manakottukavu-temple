@@ -245,3 +245,18 @@ em,i{font-style:normal;color:inherit}
 
 @media(max-width:980px){.upcoming-event{min-height:680px;padding:100px 24px}.event-copy{max-width:560px}.gift-hero{min-height:820px;padding:155px 24px 80px}.gift-hero-copy{width:min(570px,72vw)}.gift-facts{grid-template-columns:1fr}.gift-prizes-heading{position:static}.gift-prizes{grid-template-columns:1fr}}
 @media(max-width:620px){.upcoming-event{min-height:700px;padding:82px 16px}.event-art img,.gift-hero-art img{object-position:66% center}.upcoming-event:after,.gift-hero:after{background:linear-gradient(90deg,rgba(72,18,6,.94),rgba(72,18,6,.68) 62%,rgba(72,18,6,.28))}.event-copy{padding:26px 22px;border-radius:22px}.event-copy h2{font-size:38px}.gift-hero{min-height:850px;padding:130px 18px 65px}.gift-hero-copy{width:100%}.gift-hero h1{font-size:44px}.gift-prizes ol{grid-template-columns:1fr}.gift-prizes li:first-child{grid-column:auto}.gift-terms{padding:22px 20px}}
+
+/* Clean home event card */
+.upcoming-event{min-height:0;padding:88px 7vw;background:var(--ivory);color:var(--ink)}
+.upcoming-event:after{display:none}
+.upcoming-event .event-copy{max-width:1180px;margin:auto;padding:52px 58px;border:1px solid rgba(93,36,36,.14);border-radius:28px;background:#eee3d3;backdrop-filter:none;-webkit-backdrop-filter:none}
+.upcoming-event .event-copy .section-kicker{color:var(--gold)}
+.upcoming-event .event-copy h2{margin:10px 0 16px;color:var(--wine);font-size:clamp(36px,4.2vw,54px)}
+.upcoming-event .event-copy>p:not(.section-kicker){max-width:720px;color:var(--muted)}
+.upcoming-event .event-price{background:#fff8e9;color:var(--wine);border:1px solid rgba(93,36,36,.12)}
+.upcoming-event .event-copy dl{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.upcoming-event .event-copy dl div{grid-template-columns:90px 1fr;border-color:rgba(93,36,36,.14)}
+.upcoming-event .event-copy dt{color:var(--gold)}
+.upcoming-event .event-copy dd{color:var(--ink)}
+.upcoming-event .event-link{background:var(--wine);color:#fffaf1}
+@media(max-width:700px){.upcoming-event{min-height:0;padding:64px 16px}.upcoming-event .event-copy{padding:32px 24px;border-radius:22px}.upcoming-event .event-copy dl{grid-template-columns:1fr}.upcoming-event .event-copy dl div{grid-template-columns:1fr;gap:5px}}
