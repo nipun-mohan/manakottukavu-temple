@@ -13,7 +13,7 @@ const executive = [
   { image: "ratheesh-p", en: "Ratheesh P.", ml: "രതീഷ് പി.", roleEn: "Vice President", roleMl: "വൈസ് പ്രസിഡന്റ്" },
   { image: "k-ravi", en: "K. Ravi", ml: "കെ. രവി", roleEn: "Secretary", roleMl: "സെക്രട്ടറി" },
   { image: "suresh-shankar", en: "Suresh Shankar", ml: "സുരേഷ് ശങ്കർ", roleEn: "Joint Secretary", roleMl: "ജോയിന്റ് സെക്രട്ടറി" },
-  { image: "ka-ashok-kumar", en: "K. E. Ahsok Kumar", ml: "കെ. ഇ. അശോക് കുമാർ", roleEn: "Treasurer", roleMl: "ട്രഷറർ" },
+  { image: "ka-ashok-kumar", en: "K. E. Ashok Kumar", ml: "കെ. ഇ. അശോക് കുമാർ", roleEn: "Treasurer", roleMl: "ട്രഷറർ" },
 ];
 
 const members = [
