@@ -1,37 +1,35 @@
 "use client";
 
-import { CSSProperties, useEffect, useState } from "react";
-
-const committeeSource = "https://manakottukavu.nipunmohanan.workers.dev/media/renovation/document/page-12.jpg";
+import { useEffect, useState } from "react";
 
 const templeRepresentatives = [
-  { image: "trustee", x: "19.1%", y: "12.2%", en: "P. Venugopalanunni", ml: "പി. വേണുഗോപാലനുണ്ണി", roleEn: "Trustee", roleMl: "ഊരാളൻ" },
-  { image: "tantri", x: "49.4%", y: "12.2%", en: "Balakrishnan Vai", ml: "ബാലകൃഷ്ണൻ വൈ", roleEn: "Kavu Tantri", roleMl: "കാവ് തന്ത്രി" },
-  { image: "poojari", x: "81.2%", y: "12.2%", en: "Muraleedharan Irakkode", ml: "മുരളീധരൻ ഇരക്കോട്", roleEn: "Kavu Poojari", roleMl: "കാവ് പൂജാരി" },
+  { image: "trustee", en: "P. Venugopalanunni", ml: "പി. വേണുഗോപാലനുണ്ണി", roleEn: "Trustee", roleMl: "ഊരാളൻ" },
+  { image: "tantri", en: "Balakrishnan Vai", ml: "ബാലകൃഷ്ണൻ വൈ", roleEn: "Kavu Tantri", roleMl: "കാവ് തന്ത്രി" },
+  { image: "poojari", en: "Muraleedharan Irakkode", ml: "മുരളീധരൻ ഇരക്കോട്", roleEn: "Kavu Poojari", roleMl: "കാവ് പൂജാരി" },
 ];
 
 const executive = [
-  { image: "ajish-kumar", x: "12.5%", y: "37.2%", en: "Ajish Kumar", ml: "അജേഷ് കുമാർ", roleEn: "President", roleMl: "പ്രസിഡന്റ്" },
-  { image: "ratheesh-p", x: "31.6%", y: "37.2%", en: "Ratheesh P.", ml: "രതീഷ് പി", roleEn: "Vice President", roleMl: "വൈസ് പ്രസിഡന്റ്" },
-  { image: "k-ravi", x: "50.7%", y: "37.2%", en: "K. Ravi", ml: "കെ. രവി", roleEn: "Secretary", roleMl: "സെക്രട്ടറി" },
-  { image: "suresh-shankar", x: "69.3%", y: "37.2%", en: "Suresh Shankar", ml: "സുരേഷ് ശങ്കർ", roleEn: "Joint Secretary", roleMl: "ജോയിന്റ് സെക്രട്ടറി" },
-  { image: "ka-ashok-kumar", x: "88.1%", y: "37.2%", en: "K. A. Ashok Kumar", ml: "കെ. എ. അശോക് കുമാർ", roleEn: "Treasurer", roleMl: "ട്രഷറർ" },
+  { image: "ajish-kumar", en: "Ajish Kumar", ml: "അജേഷ് കുമാർ", roleEn: "President", roleMl: "പ്രസിഡന്റ്" },
+  { image: "ratheesh-p", en: "Ratheesh P.", ml: "രതീഷ് പി", roleEn: "Vice President", roleMl: "വൈസ് പ്രസിഡന്റ്" },
+  { image: "k-ravi", en: "K. Ravi", ml: "കെ. രവി", roleEn: "Secretary", roleMl: "സെക്രട്ടറി" },
+  { image: "suresh-shankar", en: "Suresh Shankar", ml: "സുരേഷ് ശങ്കർ", roleEn: "Joint Secretary", roleMl: "ജോയിന്റ് സെക്രട്ടറി" },
+  { image: "ka-ashok-kumar", en: "K. A. Ashok Kumar", ml: "കെ. എ. അശോക് കുമാർ", roleEn: "Treasurer", roleMl: "ട്രഷറർ" },
 ];
 
 const members = [
-  { image: "t-manorama", x: "12.5%", y: "57.4%", en: "T. Manorama", ml: "ടി. മനോരമ", roleEn: "Convenor", roleMl: "കൺവീനർ" },
-  { image: "pk-sreedharan", x: "31.6%", y: "57.4%", en: "P. K. Sreedharan", ml: "ശ്രീധരൻ പി. കെ" },
-  { image: "ng-menon", x: "50.7%", y: "57.4%", en: "N. G. Menon", ml: "എൻ. ജി. മേനോൻ" },
-  { image: "v-mohanan", x: "69.3%", y: "57.4%", en: "V. Mohanan", ml: "മോഹനൻ വി" },
-  { image: "rahul-warrier", x: "88.1%", y: "57.4%", en: "Rahul Warrier", ml: "രാഹുൽ വാര്യർ" },
-  { image: "r-manoj-kumar", x: "12.5%", y: "73.1%", en: "R. Manoj Kumar", ml: "മനോജ് കുമാർ ആർ" },
-  { image: "vk-manikandan", x: "31.6%", y: "73.1%", en: "V. K. Manikandan", ml: "മണികണ്ഠൻ വി. കെ" },
-  { image: "shobha-sreedharan", x: "50.7%", y: "73.1%", en: "Shobha Sreedharan", ml: "ശോഭ ശ്രീധരൻ" },
-  { image: "ps-sreenath", x: "69.3%", y: "73.1%", en: "P. S. Sreenath", ml: "ശ്രീനാഥ് പി. എസ്" },
-  { image: "o-balakrishnan", x: "88.1%", y: "73.1%", en: "O. Balakrishnan", ml: "ബാലകൃഷ്ണൻ ഒ." },
+  { image: "t-manorama", en: "T. Manorama", ml: "ടി. മനോരമ", roleEn: "Convenor", roleMl: "കൺവീനർ" },
+  { image: "o-balakrishnan", en: "O. Balakrishnan", ml: "ബാലകൃഷ്ണൻ ഒ." },
+  { image: "mohan-p", en: "Mohan P.", ml: "മോഹൻ പി" },
+  { image: "ng-menon", en: "N. G. Menon", ml: "എൻ. ജി. മേനോൻ" },
+  { image: "pk-sreedharan", en: "P. K. Sreedharan", ml: "ശ്രീധരൻ പി. കെ" },
+  { image: "shobha-sreedharan", en: "Shobha Sreedharan", ml: "ശോഭ ശ്രീധരൻ" },
+  { image: "vb-manikandan", en: "V. B. Manikandan", ml: "മണികണ്ഠൻ വി. ബി" },
+  { image: "r-manoj-kumar", en: "R. Manoj Kumar", ml: "മനോജ് കുമാർ ആർ" },
+  { image: "rahul-warrier", en: "Rahul Warrier", ml: "രാഹുൽ വാര്യർ" },
+  { image: "ps-sreenath", en: "P. S. Sreenath", ml: "ശ്രീനാഥ് പി. എസ്" },
 ];
 
-type Person = { image: string; x: string; y: string; en: string; ml: string; roleEn?: string; roleMl?: string };
+type Person = { image: string; en: string; ml: string; roleEn?: string; roleMl?: string };
 
 export default function CommitteePage() {
   const [lang, setLang] = useState<"en" | "ml">("en");
@@ -52,7 +50,7 @@ export default function CommitteePage() {
   });
   const L = ({ en, ml }: { en: React.ReactNode; ml: React.ReactNode }) => <>{lang === "en" ? en : ml}</>;
   const card = (person: Person) => <article className="committee-card" key={person.image}>
-    <div className="committee-portrait" role="img" aria-label={lang === "en" ? person.en : person.ml} style={{ backgroundImage: `url(${committeeSource})`, "--portrait-x": person.x, "--portrait-y": person.y } as CSSProperties}/>
+    <img className="committee-portrait" src={`/committee/${person.image}.jpg`} alt={lang === "en" ? person.en : person.ml}/>
     <div>{person.roleEn && <span>{lang === "en" ? person.roleEn : person.roleMl}</span>}<h3>{lang === "en" ? person.en : person.ml}</h3></div>
   </article>;
 
