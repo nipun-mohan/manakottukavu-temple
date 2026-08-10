@@ -23,7 +23,7 @@ const members = [
   { image: "ng-menon", en: "N. G. Menon", ml: "എൻ. ജി. മേനോൻ" },
   { image: "pk-sreedharan", en: "Sreedharan P. K.", ml: "ശ്രീധരൻ പി. കെ." },
   { image: "shobha-sreedharan", en: "Shobha Shashidharan", ml: "ശോഭ ശശിധരൻ" },
-  { image: "vb-manikandan", en: "Mandikandan V. B.", ml: "മണ്ടികണ്ടൻ വി. ബി." },
+  { image: "vb-manikandan", en: "Manikandan V. B.", ml: "മണികണ്ഠൻ വി. ബി." },
   { image: "r-manoj-kumar", en: "Manoj Kumar R.", ml: "മനോജ് കുമാർ ആർ." },
   { image: "rahul-warrier", en: "Rahul Warrier", ml: "രാഹുൽ വാര്യർ" },
   { image: "ps-sreenath", en: "Sreenath P. S.", ml: "ശ്രീനാഥ് പി. എസ്." },
