@@ -50,7 +50,7 @@ export default function CommitteePage() {
   });
   const L = ({ en, ml }: { en: React.ReactNode; ml: React.ReactNode }) => <>{lang === "en" ? en : ml}</>;
   const card = (person: Person) => <article className="committee-card" key={person.image}>
-    <img className="committee-portrait" src={`/committee/${person.image}.jpg?v=20260811`} alt={lang === "en" ? person.en : person.ml}/>
+    <img className="committee-portrait" src={`/committee/${person.image}.jpg?v=20260811b`} alt={lang === "en" ? person.en : person.ml}/>
     <div>{person.roleEn && <span>{lang === "en" ? person.roleEn : person.roleMl}</span>}<h3>{lang === "en" ? person.en : person.ml}</h3></div>
   </article>;
 
