@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const mediaHost = "https://manakottukavu.nipunmohanan.workers.dev/media";
 const slides = Array.from({ length: 18 }, (_, i) => `${mediaHost}/renovation/carousel/${String(i + 1).padStart(2, "0")}.jpeg`);
-const documentPages = Array.from({ length: 12 }, (_, i) => i === 11 ? "/renovation/document/page-12.jpg" : `${mediaHost}/renovation/document/page-${String(i + 1).padStart(2, "0")}.jpg`);
+const documentPages = Array.from({ length: 11 }, (_, i) => `${mediaHost}/renovation/document/page-${String(i + 1).padStart(2, "0")}.jpg`);
 
 const sponsorships = [
   ["Karinkal pillar", "കരിങ്കൽ തൂൺ", "₹25,000"], ["Door", "പുനർദ്വാരം", "₹45,000"], ["Sopanam", "സോപാനം", "₹35,000"],
