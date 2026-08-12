@@ -65,6 +65,6 @@ export default function CommitteePage() {
       <div className="committee-group"><div className="committee-group-heading"><span>03</span><h2><L en="Committee Members" ml="കമ്മിറ്റി അംഗങ്ങൾ"/></h2></div><div className="committee-grid">{members.map(card)}</div></div>
     </section>
 
-    <footer><a className="brand" href="/"><span className="brand-mark" aria-hidden="true">ॐ</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ്</small></span></a><p><L en="Paliam Devaswom, Mullurkkara, Thrissur, Kerala." ml="പാലിയം ദേവസ്വം, മുള്ളൂർക്കര, തൃശ്ശൂർ, കേരളം."/></p><div><a href="/"><L en="Home" ml="ഹോം"/></a><a href="/#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="/renovation"><L en="Renovation" ml="പുനരുദ്ധാരണം"/></a></div><small>© {new Date().getFullYear()} Manakottukavu Trust</small></footer>
+    <footer><a className="brand" href="/"><span className="brand-mark" aria-hidden="true">ॐ</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ്</small></span></a><p><L en="Paliam Devaswom, Mullurkkara, Thrissur, Kerala." ml="പാലിയം ദേവസ്വം, മുള്ളൂർക്കര, തൃശ്ശൂർ, കേരളം."/></p><div><a href="/"><L en="Home" ml="ഹോം"/></a><a href="/#offerings"><L en="Offerings" ml="വഴിപാടുകൾ"/></a><a href="/renovation"><L en="Renovation" ml="പുനരുദ്ധാരണം"/></a></div><small className="footer-bottom"><span>© {new Date().getFullYear()} Manakottukavu Trust</span><span>Site managed by Nipun Mohan</span></small></footer>
   </main>;
 }
