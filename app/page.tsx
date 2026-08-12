@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { defaultOfferings, formatPrice, type Offering } from "../lib/offerings";
 
 const facebookUrl = "https://www.facebook.com/people/%E0%B4%AE%E0%B4%A8%E0%B4%95%E0%B5%8D%E0%B4%95%E0%B5%8B%E0%B4%9F%E0%B5%8D%E0%B4%9F%E0%B5%81%E0%B4%95%E0%B4%BE%E0%B4%B5%E0%B5%8D-%E0%B4%AE%E0%B5%81%E0%B4%B3%E0%B5%8D%E0%B4%B3%E0%B5%82%E0%B5%BC%E0%B4%95%E0%B5%8D%E0%B4%95%E0%B4%B0/100089469818723/";
 
-const offerings = [
+const legacyOfferings = [
   ["Valiya Shakteyam (Kalasham)", "വലിയ ശാക്തേയം (കലശം)", "₹2,800"], ["Shakteyam (Kalasham)", "ശാക്തേയം (കലശം)", "₹500"],
   ["Maha Guruthi Pooja", "മഹാ ഗുരുതിപൂജ", "₹3,000"], ["Vilakku", "വിളക്ക്", "₹10"], ["Ghee Lamp", "നെയ്യ് വിളക്ക്", "₹25"],
   ["Garland", "മാല", "₹10"], ["Pushpanjali", "പുഷ്പാഞ്ജലി", "₹10"], ["Raktha Pushpanjali", "രക്ത പുഷ്പാഞ്ജലി", "₹15"],
@@ -21,10 +22,15 @@ const offerings = [
   ["Turmeric Powder Abhishekam", "മഞ്ഞൾപ്പൊടി അഭിഷേകം", "₹50"], ["Lemon Garland", "നാരങ്ങമാല", null], ["Lemon Lamp", "നാരങ്ങ വിളക്ക്", null], ["Kedavilakku", "കെടാവിളക്ക്", "₹100"],
 ] as const;
 
+type OfferingRow = readonly [string, string, string | null, string?, string?];
+const toRows = (items: Offering[]): OfferingRow[] => items.map(item => [item.nameEn, item.nameMl, formatPrice(item.price), item.noteEn || undefined, item.noteMl || undefined]);
+const initialOfferings = toRows(defaultOfferings);
+
 export default function Home() {
   const [lang, setLang] = useState<"en" | "ml">("en");
+  const [offerings, setOfferings] = useState<OfferingRow[]>(initialOfferings);
   const [bookingOpen, setBookingOpen] = useState(false);
-  const [bookingOffering, setBookingOffering] = useState(offerings[0][0]);
+  const [bookingOffering, setBookingOffering] = useState(initialOfferings[0][0]);
   const [devoteeName, setDevoteeName] = useState("");
   useEffect(() => {
     document.documentElement.lang = lang;
@@ -40,6 +46,12 @@ export default function Home() {
     restoreLanguage();
     window.addEventListener("storage", restoreLanguage);
     return () => window.removeEventListener("storage", restoreLanguage);
+  }, []);
+  useEffect(() => {
+    fetch("/api/offerings")
+      .then(response => response.ok ? response.json() : Promise.reject())
+      .then((data: { offerings?: Offering[] }) => data.offerings?.length && setOfferings(toRows(data.offerings)))
+      .catch(() => undefined);
   }, []);
   const toggleLanguage = () => setLang(current => {
     const next = current === "en" ? "ml" : "en";
