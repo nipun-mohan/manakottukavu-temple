@@ -42,7 +42,7 @@ export default function AdminOfferings() {
     <header className="site-header subpage-header">
       <a className="brand" href="/"><span className="brand-mark" aria-hidden="true">ॐ</span><span><b>MANAKOTTUKAVU</b><small>മനക്കോട്ടുകാവ്</small></span></a>
       <nav><a href="/">View website</a><a aria-current="page" href="/admin">Offering Admin</a></nav>
-      <a className="admin-exit" href="/cdn-cgi/access/logout">Sign out</a>
+      <a className="admin-exit" href="/signout">Sign out</a>
     </header>
     <section className="admin-hero"><p className="section-kicker">Temple administration</p><h1>Offering prices</h1><p>Update a rate below and publish it to the website. Blank prices will appear as “Enquire”.</p></section>
     <section className="admin-workspace">
