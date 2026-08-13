@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import type { Offering } from "../../lib/offerings";
 import type { RenovationMedia } from "../../lib/renovation-media";
 
-const builtInMedia = Array.from({ length: 18 }, (_, index) => ({ id: `built-in-${index + 1}`, url: `/renovation/carousel/${String(index + 1).padStart(2, "0")}.jpeg` }));
+const mediaHost = "https://manakottukavu.nipunmohanan.workers.dev/media";
+const allBuiltInMedia = Array.from({ length: 18 }, (_, index) => ({ id: `built-in-${index + 1}`, url: `${mediaHost}/renovation/carousel/${String(index + 1).padStart(2, "0")}.jpeg`, captionEn: "", captionMl: "", createdAt: "" }));
 
 export default function AdminOfferings() {
   const [items, setItems] = useState<Offering[]>([]);
@@ -16,6 +17,7 @@ export default function AdminOfferings() {
   const [uploading, setUploading] = useState(false);
   const [selectedMedia, setSelectedMedia] = useState<string[]>([]);
   const [removing, setRemoving] = useState(false);
+  const [builtInMedia, setBuiltInMedia] = useState<RenovationMedia[]>(allBuiltInMedia);
 
   useEffect(() => { if (!mediaStatus || (!mediaStatus.includes("added") && !mediaStatus.includes("removed"))) return; const timeout = window.setTimeout(() => setMediaStatus(""), 4000); return () => window.clearTimeout(timeout); }, [mediaStatus]);
 
@@ -33,7 +35,7 @@ export default function AdminOfferings() {
     const message = (await response.text()).trim();
     throw new Error(response.status === 413 || message.includes("Payload Too Large") ? "An image is too large. Choose images smaller than 8 MB each." : message || "The server returned an unexpected response.");
   };
-  const loadMedia = async () => { const response = await fetch("/api/renovation-media", { cache: "no-store" }); const data = await readJson<{ media?: RenovationMedia[]; error?: string }>(response); if (!response.ok) throw new Error(data.error || "Unable to load renovation images."); setMedia(data.media || []); setSelectedMedia(current => current.filter(id => (data.media || []).some(item => item.id === id))); };
+  const loadMedia = async () => { const response = await fetch("/api/renovation-media", { cache: "no-store" }); const data = await readJson<{ media?: RenovationMedia[]; hiddenBuiltInIds?: string[]; error?: string }>(response); if (!response.ok) throw new Error(data.error || "Unable to load renovation images."); const uploaded = data.media || []; const builtIn = allBuiltInMedia.filter(item => !(data.hiddenBuiltInIds || []).includes(item.id)); setMedia(uploaded); setBuiltInMedia(builtIn); setSelectedMedia(current => current.filter(id => [...uploaded, ...builtIn].some(item => item.id === id))); };
   useEffect(() => { loadMedia().catch(() => setMediaStatus("Unable to load renovation images.")); }, []);
   const uploadMedia = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); const form = event.currentTarget; const formData = new FormData(form); const files = formData.getAll("images").filter((value): value is File => value instanceof File && value.size > 0);
@@ -83,8 +85,8 @@ export default function AdminOfferings() {
       <div className="admin-media-heading"><p className="section-kicker">Renovation gallery</p><h2>Add or remove renovation images</h2><p>Select one or more JPG, PNG, or WebP photographs smaller than 8 MB each. Select existing images below to remove several at once.</p></div>
       <form className="admin-upload" onSubmit={uploadMedia}><label><span>Choose one or more images</span><input name="images" type="file" accept="image/jpeg,image/png,image/webp" multiple required/></label><label><span>English caption for selected images (optional)</span><input name="captionEn" maxLength={160} placeholder="Renovation progress"/></label><label><span>Malayalam caption for selected images (optional)</span><input name="captionMl" maxLength={160} lang="ml" placeholder="പുനരുദ്ധാരണ പുരോഗതി"/></label><button disabled={uploading} type="submit">{uploading ? "Uploading images…" : "Add selected images"}</button></form>
       {mediaStatus && <p className={`admin-status ${mediaStatus.includes("added") || mediaStatus.includes("removed") ? "success" : ""}`} role="status">{mediaStatus}</p>}
-      {!!media.length && <div className="admin-media-actions"><label><input type="checkbox" checked={selectedMedia.length === media.length} onChange={() => setSelectedMedia(selectedMedia.length === media.length ? [] : media.map(item => item.id))}/> Select all uploaded</label><span>{selectedMedia.length} selected</span><button type="button" disabled={!selectedMedia.length || removing} onClick={removeSelectedMedia}>{removing ? "Removing…" : "Remove selected images"}</button></div>}
-      <div className="admin-media-scroll"><div className="admin-media-grid">{media.map(item => <article className={selectedMedia.includes(item.id) ? "selected" : ""} key={item.id}><label className="admin-media-select"><input type="checkbox" checked={selectedMedia.includes(item.id)} onChange={() => toggleMedia(item.id)}/><span>Select</span></label><img src={item.url} alt={item.captionEn || "Renovation photograph"}/><div><b>{item.captionEn || "Uploaded renovation photograph"}</b>{item.captionMl && <p lang="ml">{item.captionMl}</p>}<small>Uploaded image</small></div></article>)}{builtInMedia.map((item, index) => <article className="built-in" key={item.id}><span className="admin-media-badge">Website image</span><img src={item.url} alt={`Existing renovation photograph ${index + 1}`}/><div><b>Existing renovation photograph {index + 1}</b><small>Included with the website</small></div></article>)}</div></div>
+      {(media.length + builtInMedia.length) > 0 && <div className="admin-media-actions"><label><input type="checkbox" checked={selectedMedia.length === media.length + builtInMedia.length} onChange={() => setSelectedMedia(selectedMedia.length === media.length + builtInMedia.length ? [] : [...media, ...builtInMedia].map(item => item.id))}/> Select all</label><span>{selectedMedia.length} selected</span><button type="button" disabled={!selectedMedia.length || removing} onClick={removeSelectedMedia}>{removing ? "Removing…" : "Remove selected images"}</button></div>}
+      <div className="admin-media-scroll"><div className="admin-media-grid">{[...media, ...builtInMedia].map((item, index) => <article className={selectedMedia.includes(item.id) ? "selected" : ""} key={item.id}><label className="admin-media-select"><input type="checkbox" checked={selectedMedia.includes(item.id)} onChange={() => toggleMedia(item.id)}/><span>Select</span></label><img src={item.url} alt={item.captionEn || `Renovation photograph ${index + 1}`}/>{(item.captionEn || item.captionMl) && <div>{item.captionEn && <b>{item.captionEn}</b>}{item.captionMl && <p lang="ml">{item.captionMl}</p>}</div>}</article>)}</div></div>
       {!media.length && !mediaStatus && <p className="admin-empty">No administrator-uploaded images yet.</p>}
     </section>
     <footer className="admin-footer"><span>© {new Date().getFullYear()} Manakottukavu</span><span>Secure administrator area</span></footer>

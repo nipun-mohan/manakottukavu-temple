@@ -11,6 +11,11 @@ function authorized(request: Request) {
 export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   if (!authorized(request)) return Response.json({ error: "Administrator sign-in required." }, { status: 401 });
   const { id } = await params;
+  if (/^built-in-(?:[1-9]|1[0-8])$/.test(id)) {
+    await env.DB.prepare("CREATE TABLE IF NOT EXISTS hidden_renovation_media (id TEXT PRIMARY KEY)").run();
+    await env.DB.prepare("INSERT OR IGNORE INTO hidden_renovation_media(id) VALUES(?)").bind(id).run();
+    return Response.json({ ok: true });
+  }
   const row = await env.DB.prepare("SELECT object_key FROM renovation_media WHERE id=?").bind(id).first<{ object_key: string }>();
   if (!row) return Response.json({ error: "Image not found." }, { status: 404 });
   await env.MEDIA.delete(row.object_key);

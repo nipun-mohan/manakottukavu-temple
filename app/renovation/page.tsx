@@ -19,8 +19,9 @@ export default function RenovationPage() {
   const [slide, setSlide] = useState(0);
   const [openPage, setOpenPage] = useState<number | null>(null);
   const [uploadedMedia, setUploadedMedia] = useState<RenovationMedia[]>([]);
-  const slides = [...uploadedMedia.map(item => item.url), ...originalSlides];
-  useEffect(() => { fetch("/api/renovation-media", { cache: "no-store" }).then(response => response.json()).then((data: { media?: RenovationMedia[] }) => setUploadedMedia(data.media || [])).catch(() => {}); }, []);
+  const [hiddenBuiltInIds, setHiddenBuiltInIds] = useState<string[]>([]);
+  const slides = [...uploadedMedia.map(item => item.url), ...originalSlides.filter((_, index) => !hiddenBuiltInIds.includes(`built-in-${index + 1}`))];
+  useEffect(() => { fetch("/api/renovation-media", { cache: "no-store" }).then(response => response.json()).then((data: { media?: RenovationMedia[]; hiddenBuiltInIds?: string[] }) => { setUploadedMedia(data.media || []); setHiddenBuiltInIds(data.hiddenBuiltInIds || []); }).catch(() => {}); }, []);
   useEffect(() => { document.documentElement.lang = lang; }, [lang]);
   useEffect(() => {
     const restoreLanguage = () => {
