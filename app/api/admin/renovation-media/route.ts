@@ -21,8 +21,8 @@ export async function POST(request: Request) {
   if (!authorized(request)) return Response.json({ error: "Administrator sign-in required." }, { status: 401 });
   const form = await request.formData();
   const file = form.get("image");
-  if (!(file instanceof File) || !allowedTypes.has(file.type) || file.size < 1 || file.size > 10 * 1024 * 1024) {
-    return Response.json({ error: "Choose a JPG, PNG, or WebP image up to 10 MB." }, { status: 400 });
+  if (!(file instanceof File) || !allowedTypes.has(file.type) || file.size < 1 || file.size > 8 * 1024 * 1024) {
+    return Response.json({ error: "Choose a JPG, PNG, or WebP image smaller than 8 MB." }, { status: 400 });
   }
   const id = crypto.randomUUID();
   const extension = file.type === "image/png" ? "png" : file.type === "image/webp" ? "webp" : "jpg";
