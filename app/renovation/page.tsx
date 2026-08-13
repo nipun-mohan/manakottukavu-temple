@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import type { RenovationMedia } from "../../lib/renovation-media";
 
 const mediaHost = "https://manakottukavu.nipunmohanan.workers.dev/media";
-const slides = Array.from({ length: 18 }, (_, i) => `${mediaHost}/renovation/carousel/${String(i + 1).padStart(2, "0")}.jpeg`);
+const originalSlides = Array.from({ length: 18 }, (_, i) => `${mediaHost}/renovation/carousel/${String(i + 1).padStart(2, "0")}.jpeg`);
 const documentPages = Array.from({ length: 11 }, (_, i) => `${mediaHost}/renovation/document/page-${String(i + 1).padStart(2, "0")}.jpg`);
 
 const sponsorships = [
@@ -17,6 +18,9 @@ export default function RenovationPage() {
   const [lang, setLang] = useState<"en" | "ml">("en");
   const [slide, setSlide] = useState(0);
   const [openPage, setOpenPage] = useState<number | null>(null);
+  const [uploadedMedia, setUploadedMedia] = useState<RenovationMedia[]>([]);
+  const slides = [...uploadedMedia.map(item => item.url), ...originalSlides];
+  useEffect(() => { fetch("/api/renovation-media", { cache: "no-store" }).then(response => response.json()).then((data: { media?: RenovationMedia[] }) => setUploadedMedia(data.media || [])).catch(() => {}); }, []);
   useEffect(() => { document.documentElement.lang = lang; }, [lang]);
   useEffect(() => {
     const restoreLanguage = () => {
@@ -32,7 +36,7 @@ export default function RenovationPage() {
     window.localStorage.setItem("manakottukavu-language", next);
     return next;
   });
-  useEffect(() => { const id = window.setInterval(() => setSlide(s => (s + 1) % slides.length), 4800); return () => window.clearInterval(id); }, []);
+  useEffect(() => { const id = window.setInterval(() => setSlide(s => (s + 1) % slides.length), 4800); return () => window.clearInterval(id); }, [slides.length]);
   useEffect(() => {
     if (openPage === null) return;
     const close = (event: KeyboardEvent) => event.key === "Escape" && setOpenPage(null);
