@@ -116,7 +116,7 @@ em,i{font-style:normal;color:inherit}
 .renovation-hero{background:#f8f3eb}
 .fade-carousel{background:#e7dccb}
 .renovation-details{background:#f8f3eb}
-.sponsorship-section{background:#e7dccb;grid-template-columns:minmax(230px,.55fr) minmax(0,1.45fr);gap:5vw}
+.sponsorship-section{background:#e7dccb;grid-template-columns:minmax(300px,.7fr) minmax(0,1.3fr);gap:4vw}.sponsorship-section>div{min-width:0}.sponsorship-section>div:first-child{overflow:hidden}.sponsorship-section h2{max-width:100%;font-size:clamp(28px,2.7vw,42px);line-height:1.18;overflow-wrap:anywhere;word-break:normal}
 .bank-section{background:#f8f3eb}
 .committee-section{background:#ece1d2}
 .document-section{background:#f8f3eb}
