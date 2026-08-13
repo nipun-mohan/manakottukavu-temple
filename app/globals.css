@@ -137,7 +137,7 @@ em,i{font-style:normal;color:inherit}
 .minimal-hero{border-radius:0}
 .section-heading{justify-content:flex-start}
 
-@media(max-width:1180px){.sponsorship-section{grid-template-columns:1fr;gap:28px}.sponsorship-section>div:first-child{width:100%;padding:26px}.sponsorship-list{width:100%}.sponsorship-list>div{width:100%;grid-template-columns:34px minmax(0,1fr) max-content}.sponsorship-list strong{display:block;color:var(--wine);white-space:nowrap}}
+@media(max-width:1180px){.sponsorship-section{grid-template-columns:minmax(0,1fr);gap:28px}.sponsorship-section>div{min-width:0}.sponsorship-section>div:first-child{width:100%;padding:26px}.sponsorship-section h2{max-width:100%;font-size:clamp(30px,5vw,42px);overflow-wrap:anywhere;word-break:normal}.sponsorship-list{width:100%;min-width:0}.sponsorship-list>div{width:100%;min-width:0;grid-template-columns:34px minmax(0,1fr) max-content}.sponsorship-list b{min-width:0;overflow-wrap:anywhere}.sponsorship-list strong{display:block;color:var(--wine);white-space:nowrap}}
 @media(max-width:1100px){.mobile-menu{display:block}.site-header>nav{display:none}}
 @media(max-width:760px){.site-header,.home-header,.subpage-header{top:12px;left:14px;right:14px}.sponsorship-list>div{grid-template-columns:26px minmax(0,1fr) max-content}.sponsorship-list strong{font-size:15px}}
 @media(max-width:480px){.site-header{padding:9px 10px}.site-header .brand{gap:8px}.site-header .brand b{font-size:12px;letter-spacing:.08em}.site-header .brand small{font-size:7px}.language-toggle{height:38px;padding:0 9px}.mobile-menu summary{width:38px;height:38px}.mobile-menu nav{top:48px}}
