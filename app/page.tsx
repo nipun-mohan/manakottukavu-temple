@@ -39,7 +39,7 @@ export default function Home() {
     const observer = new IntersectionObserver(entries => entries.forEach(entry => entry.isIntersecting && entry.target.classList.add("is-visible")), { threshold: .08 });
     document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
     return () => observer.disconnect();
-  }, [lang]);
+  }, [lang, offerings]);
   useEffect(() => {
     const restoreLanguage = () => {
       const saved = window.localStorage.getItem("manakottukavu-language");
