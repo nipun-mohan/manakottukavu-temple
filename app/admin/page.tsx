@@ -58,13 +58,36 @@ export default function AdminOfferings() {
     ...item, price: value === "" ? null : Math.max(0, Number.parseInt(value, 10) || 0),
   } : item));
 
+  const addOffering = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const nameEn = String(data.get("nameEn") || "").trim();
+    const nameMl = String(data.get("nameMl") || "").trim();
+    const priceText = String(data.get("price") || "").trim();
+    if (!nameEn || !nameMl) { setStatus("Enter both English and Malayalam offering names."); return; }
+    setItems(current => [...current, {
+      id: -Date.now(), nameEn, nameMl, price: priceText === "" ? null : Math.max(0, Number.parseInt(priceText, 10) || 0),
+      noteEn: String(data.get("noteEn") || "").trim(), noteMl: String(data.get("noteMl") || "").trim(), sortOrder: current.length + 1,
+    }]);
+    form.reset();
+    setStatus("Offering added. Select Save & publish to make it live.");
+  };
+
+  const removeOffering = (id: number, name: string) => {
+    if (!window.confirm(`Remove “${name}” from the offering list?`)) return;
+    setItems(current => current.filter(item => item.id !== id).map((item, index) => ({ ...item, sortOrder: index + 1 })));
+    setStatus("Offering removed. Select Save & publish to make the change live.");
+  };
+
   const save = async () => {
     setSaving(true); setStatus("Saving changes…");
     try {
       const response = await fetch("/api/admin/offerings", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ offerings: items }) });
-      const data = await response.json() as { error?: string };
+      const data = await response.json() as { offerings?: Offering[]; error?: string };
       if (!response.ok) throw new Error(data.error || "Save failed.");
-      setStatus("All offering prices are live.");
+      if (data.offerings) setItems(data.offerings);
+      setStatus("The offering list is live.");
     } catch (error) { setStatus(error instanceof Error ? error.message : "Save failed."); }
     finally { setSaving(false); }
   };
@@ -77,9 +100,20 @@ export default function AdminOfferings() {
     </header>
     <section className="admin-hero"><p className="section-kicker">Temple administration</p><h1>Offering prices</h1><p>Update a rate below and publish it to the website. Blank prices will appear as “Enquire”.</p></section>
     <section className="admin-workspace" id="offerings-admin">
+      <form className="admin-add-offering" onSubmit={addOffering}>
+        <div className="admin-add-heading"><p className="section-kicker">New offering</p><h2>Add an offering</h2></div>
+        <div className="admin-add-grid">
+          <label><span>English name</span><input name="nameEn" maxLength={120} required placeholder="Offering name"/></label>
+          <label><span>Malayalam name</span><input name="nameMl" maxLength={120} required lang="ml" placeholder="വഴിപാട് പേര്"/></label>
+          <label><span>Price (₹)</span><input name="price" inputMode="numeric" min="0" step="1" type="number" placeholder="Enquire"/></label>
+          <label><span>English note (optional)</span><input name="noteEn" maxLength={180} placeholder="Special instruction"/></label>
+          <label><span>Malayalam note (optional)</span><input name="noteMl" maxLength={180} lang="ml" placeholder="പ്രത്യേക നിർദ്ദേശം"/></label>
+          <button type="submit">Add offering</button>
+        </div>
+      </form>
       <div className="admin-toolbar"><label><span>Find an offering</span><input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Search English or Malayalam"/></label><div><small>{items.length} offerings</small><button type="button" onClick={save} disabled={saving || !items.length}>{saving ? "Saving…" : "Save & publish"}</button></div></div>
       {status && <p className={`admin-status ${status.includes("live") ? "success" : ""}`} role="status">{status}</p>}
-      <div className="admin-list">{filtered.map(item => <article className="admin-row" key={item.id}><span className="admin-number">{String(item.sortOrder).padStart(2,"0")}</span><div><h2>{item.nameEn}</h2><p lang="ml">{item.nameMl}</p></div><label><span>Price (₹)</span><input inputMode="numeric" min="0" step="1" type="number" value={item.price ?? ""} onChange={event => setPrice(item.id, event.target.value)} placeholder="Enquire"/></label></article>)}</div>
+      <div className="admin-list">{filtered.map(item => <article className="admin-row" key={item.id}><span className="admin-number">{String(item.sortOrder).padStart(2,"0")}</span><div><h2>{item.nameEn}</h2><p lang="ml">{item.nameMl}</p></div><label><span>Price (₹)</span><input inputMode="numeric" min="0" step="1" type="number" value={item.price ?? ""} onChange={event => setPrice(item.id, event.target.value)} placeholder="Enquire"/></label><button className="admin-remove-offering" type="button" onClick={() => removeOffering(item.id, item.nameEn)}>Remove</button></article>)}</div>
     </section>
     <section className="admin-media" id="renovation-images">
       <div className="admin-media-heading"><p className="section-kicker">Renovation gallery</p><h2>Add or remove renovation images</h2><p>Select one or more JPG, PNG, or WebP photographs smaller than 8 MB each. Select existing images below to remove several at once.</p></div>

@@ -32,6 +32,16 @@ export async function PUT(request: Request) {
     return Response.json({ error: "Every offering needs valid names and a non-negative whole-number price." }, { status: 400 });
   }
   await ensureOfferings();
-  await env.DB.batch(items.map(item => env.DB.prepare(`UPDATE offerings SET name_en=?,name_ml=?,price=?,note_en=?,note_ml=?,sort_order=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`).bind(item.nameEn,item.nameMl,item.price,item.noteEn,item.noteMl,item.sortOrder,item.id)));
-  return Response.json({ ok: true, offerings: items });
+  const { results: existingRows } = await env.DB.prepare("SELECT id FROM offerings").all<{ id: number }>();
+  const existingIds = new Set(existingRows.map(row => row.id));
+  const keptIds = new Set(items.filter(item => item.id > 0 && existingIds.has(item.id)).map(item => item.id));
+  const statements = [
+    ...existingRows.filter(row => !keptIds.has(row.id)).map(row => env.DB.prepare("DELETE FROM offerings WHERE id=?").bind(row.id)),
+    ...items.map(item => existingIds.has(item.id)
+      ? env.DB.prepare("UPDATE offerings SET name_en=?,name_ml=?,price=?,note_en=?,note_ml=?,sort_order=?,updated_at=CURRENT_TIMESTAMP WHERE id=?").bind(item.nameEn,item.nameMl,item.price,item.noteEn,item.noteMl,item.sortOrder,item.id)
+      : env.DB.prepare("INSERT INTO offerings (name_en,name_ml,price,note_en,note_ml,sort_order) VALUES (?,?,?,?,?,?)").bind(item.nameEn,item.nameMl,item.price,item.noteEn,item.noteMl,item.sortOrder)),
+  ];
+  await env.DB.batch(statements);
+  const { results } = await env.DB.prepare("SELECT id,name_en AS nameEn,name_ml AS nameMl,price,note_en AS noteEn,note_ml AS noteMl,sort_order AS sortOrder FROM offerings ORDER BY sort_order").all();
+  return Response.json({ ok: true, offerings: results });
 }
