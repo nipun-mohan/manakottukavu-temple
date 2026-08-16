@@ -12,6 +12,7 @@ export default function AdminOfferings() {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("Loading offering rates…");
   const [saving, setSaving] = useState(false);
+  const [offeringsChanged, setOfferingsChanged] = useState(false);
   const [media, setMedia] = useState<RenovationMedia[]>([]);
   const [mediaStatus, setMediaStatus] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -54,9 +55,12 @@ export default function AdminOfferings() {
     return term ? items.filter(item => `${item.nameEn} ${item.nameMl}`.toLocaleLowerCase().includes(term)) : items;
   }, [items, query]);
 
-  const setPrice = (id: number, value: string) => setItems(current => current.map(item => item.id === id ? {
-    ...item, price: value === "" ? null : Math.max(0, Number.parseInt(value, 10) || 0),
-  } : item));
+  const setPrice = (id: number, value: string) => {
+    setItems(current => current.map(item => item.id === id ? {
+      ...item, price: value === "" ? null : Math.max(0, Number.parseInt(value, 10) || 0),
+    } : item));
+    setOfferingsChanged(true);
+  };
 
   const addOffering = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -71,13 +75,24 @@ export default function AdminOfferings() {
       noteEn: String(data.get("noteEn") || "").trim(), noteMl: String(data.get("noteMl") || "").trim(), sortOrder: current.length + 1,
     }]);
     form.reset();
+    setOfferingsChanged(true);
     setStatus("Offering added. Select Save & publish to make it live.");
   };
 
-  const removeOffering = (id: number, name: string) => {
+  const removeOffering = async (id: number, name: string) => {
     if (!window.confirm(`Remove “${name}” from the offering list?`)) return;
-    setItems(current => current.filter(item => item.id !== id).map((item, index) => ({ ...item, sortOrder: index + 1 })));
-    setStatus("Offering removed. Select Save & publish to make the change live.");
+    const updatedItems = items.filter(item => item.id !== id).map((item, index) => ({ ...item, sortOrder: index + 1 }));
+    if (!updatedItems.length) { setStatus("At least one offering must remain in the list."); return; }
+    setSaving(true); setStatus("Removing offering…");
+    try {
+      const response = await fetch("/api/admin/offerings", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ offerings: updatedItems }) });
+      const data = await response.json() as { offerings?: Offering[]; error?: string };
+      if (!response.ok) throw new Error(data.error || "Unable to remove the offering.");
+      setItems(data.offerings || updatedItems);
+      setOfferingsChanged(false);
+      setStatus("Offering removed. The updated list is live.");
+    } catch (error) { setStatus(error instanceof Error ? error.message : "Unable to remove the offering."); }
+    finally { setSaving(false); }
   };
 
   const save = async () => {
@@ -87,6 +102,7 @@ export default function AdminOfferings() {
       const data = await response.json() as { offerings?: Offering[]; error?: string };
       if (!response.ok) throw new Error(data.error || "Save failed.");
       if (data.offerings) setItems(data.offerings);
+      setOfferingsChanged(false);
       setStatus("The offering list is live.");
     } catch (error) { setStatus(error instanceof Error ? error.message : "Save failed."); }
     finally { setSaving(false); }
@@ -111,9 +127,9 @@ export default function AdminOfferings() {
           <button type="submit">Add offering</button>
         </div>
       </form>
-      <div className="admin-toolbar"><label><span>Find an offering</span><input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Search English or Malayalam"/></label><div><small>{items.length} offerings</small><button type="button" onClick={save} disabled={saving || !items.length}>{saving ? "Saving…" : "Save & publish"}</button></div></div>
+      <div className="admin-toolbar"><label><span>Find an offering</span><input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder="Search English or Malayalam"/></label><div><small>{items.length} offerings</small><button type="button" onClick={save} disabled={saving || !items.length || !offeringsChanged}>{saving ? "Saving…" : "Save & publish"}</button></div></div>
       {status && <p className={`admin-status ${status.includes("live") ? "success" : ""}`} role="status">{status}</p>}
-      <div className="admin-list">{filtered.map(item => <article className="admin-row" key={item.id}><span className="admin-number">{String(item.sortOrder).padStart(2,"0")}</span><div><h2>{item.nameEn}</h2><p lang="ml">{item.nameMl}</p></div><label><span>Price (₹)</span><input inputMode="numeric" min="0" step="1" type="number" value={item.price ?? ""} onChange={event => setPrice(item.id, event.target.value)} placeholder="Enquire"/></label><button className="admin-remove-offering" type="button" onClick={() => removeOffering(item.id, item.nameEn)}>Remove</button></article>)}</div>
+      <div className="admin-list">{filtered.map(item => <article className="admin-row" key={item.id}><span className="admin-number">{String(item.sortOrder).padStart(2,"0")}</span><div><h2>{item.nameEn}</h2><p lang="ml">{item.nameMl}</p></div><label><span>Price (₹)</span><input inputMode="numeric" min="0" step="1" type="number" value={item.price ?? ""} onChange={event => setPrice(item.id, event.target.value)} placeholder="Enquire"/></label><button className="admin-remove-offering" type="button" disabled={saving} onClick={() => removeOffering(item.id, item.nameEn)}>{saving ? "Please wait…" : "Remove"}</button></article>)}</div>
     </section>
     <section className="admin-media" id="renovation-images">
       <div className="admin-media-heading"><p className="section-kicker">Renovation gallery</p><h2>Add or remove renovation images</h2><p>Select one or more JPG, PNG, or WebP photographs smaller than 8 MB each. Select existing images below to remove several at once.</p></div>
