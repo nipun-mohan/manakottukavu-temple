@@ -21,7 +21,7 @@ export async function GET() {
   try {
     await ensureOfferings();
     const { results } = await env.DB.prepare("SELECT id,name_en AS nameEn,name_ml AS nameMl,price,note_en AS noteEn,note_ml AS noteMl,sort_order AS sortOrder FROM offerings ORDER BY sort_order").all();
-    return Response.json({ offerings: results }, { headers: { "Cache-Control": "public, max-age=60" } });
+    return Response.json({ offerings: results }, { headers: { "Cache-Control": "no-store, no-cache, must-revalidate" } });
   } catch {
     return Response.json({ offerings: defaultOfferings, fallback: true });
   }

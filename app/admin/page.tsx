@@ -83,13 +83,17 @@ export default function AdminOfferings() {
     if (!window.confirm(`Remove “${name}” from the offering list?`)) return;
     const updatedItems = items.filter(item => item.id !== id).map((item, index) => ({ ...item, sortOrder: index + 1 }));
     if (!updatedItems.length) { setStatus("At least one offering must remain in the list."); return; }
+    if (id < 1) {
+      setItems(updatedItems);
+      setStatus("The unsaved offering was removed.");
+      return;
+    }
     setSaving(true); setStatus("Removing offering…");
     try {
-      const response = await fetch("/api/admin/offerings", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ offerings: updatedItems }) });
-      const data = await response.json() as { offerings?: Offering[]; error?: string };
+      const response = await fetch(`/api/admin/offerings?id=${encodeURIComponent(id)}`, { method: "DELETE" });
+      const data = await response.json() as { error?: string };
       if (!response.ok) throw new Error(data.error || "Unable to remove the offering.");
-      setItems(data.offerings || updatedItems);
-      setOfferingsChanged(false);
+      setItems(updatedItems);
       setStatus("Offering removed. The updated list is live.");
     } catch (error) { setStatus(error instanceof Error ? error.message : "Unable to remove the offering."); }
     finally { setSaving(false); }

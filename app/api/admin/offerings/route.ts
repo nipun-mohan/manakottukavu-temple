@@ -45,3 +45,17 @@ export async function PUT(request: Request) {
   const { results } = await env.DB.prepare("SELECT id,name_en AS nameEn,name_ml AS nameMl,price,note_en AS noteEn,note_ml AS noteMl,sort_order AS sortOrder FROM offerings ORDER BY sort_order").all();
   return Response.json({ ok: true, offerings: results });
 }
+
+export async function DELETE(request: Request) {
+  if (!authorized(request)) return Response.json({ error: "Administrator sign-in required." }, { status: 401 });
+  const id = Number(new URL(request.url).searchParams.get("id"));
+  if (!Number.isInteger(id) || id < 1) return Response.json({ error: "Invalid offering." }, { status: 400 });
+  await ensureOfferings();
+  const count = await env.DB.prepare("SELECT COUNT(*) AS total FROM offerings").first<{ total: number }>();
+  if ((count?.total || 0) <= 1) return Response.json({ error: "At least one offering must remain in the list." }, { status: 400 });
+  const result = await env.DB.prepare("DELETE FROM offerings WHERE id=?").bind(id).run();
+  if (!result.meta.changes) return Response.json({ error: "Offering not found." }, { status: 404 });
+  const { results: remaining } = await env.DB.prepare("SELECT id FROM offerings ORDER BY sort_order,id").all<{ id: number }>();
+  await env.DB.batch(remaining.map((item, index) => env.DB.prepare("UPDATE offerings SET sort_order=?,updated_at=CURRENT_TIMESTAMP WHERE id=?").bind(index + 1, item.id)));
+  return Response.json({ ok: true });
+}
