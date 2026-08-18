@@ -62,7 +62,7 @@ h1,h2,h3,.hero-timings strong,.offering-bottom strong,.primary-contact,.contact-
 .renovation-hero .eyebrow span{background:var(--gold)}
 .renovation-hero h1{color:var(--wine)}
 .renovation-hero h1 em{color:var(--gold)}
-.renovation-hero-media{height:500px;border-radius:28px;overflow:hidden;background:#dce4e6}
+.renovation-hero-media{height:auto;aspect-ratio:5/3;border-radius:28px;overflow:hidden;background:#dce4e6}
 .renovation-hero-media img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 
 .carousel-stage{background:#ded4c7;border-radius:28px;box-shadow:none}
@@ -99,8 +99,8 @@ footer{background:var(--surface);color:var(--muted);border-top:1px solid var(--l
 footer .brand b,footer>div{color:var(--wine)}
 footer>small{border-color:var(--line)}
 
-@media(max-width:980px){.renovation-hero-media{height:420px}.document-pages{grid-template-columns:repeat(2,1fr)}.sponsorship-list{grid-template-columns:1fr}}
-@media(max-width:760px){.brand-mark{width:38px;height:38px;font-size:30px}.renovation-hero-media{height:320px}.document-pages{grid-template-columns:1fr}.details-intro,.details-copy,.sponsorship-section>div:first-child,.bank-section>div:first-child{padding:22px}.booklet-viewer{padding:10px}.booklet-viewer-inner{padding:10px;border-radius:18px}.booklet-close{top:16px;right:16px}}
+@media(max-width:980px){.document-pages{grid-template-columns:repeat(2,1fr)}.sponsorship-list{grid-template-columns:1fr}}
+@media(max-width:760px){.brand-mark{width:38px;height:38px;font-size:30px}.document-pages{grid-template-columns:1fr}.details-intro,.details-copy,.sponsorship-section>div:first-child,.bank-section>div:first-child{padding:22px}.booklet-viewer{padding:10px}.booklet-viewer-inner{padding:10px;border-radius:18px}.booklet-close{top:16px;right:16px}}
 @media(prefers-reduced-motion:reduce){.booklet-viewer,.booklet-viewer-inner{animation:none}}
 
 /* Final contrast, typography, and sponsorship layout refinement */
