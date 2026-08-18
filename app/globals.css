@@ -63,7 +63,7 @@ h1,h2,h3,.hero-timings strong,.offering-bottom strong,.primary-contact,.contact-
 .renovation-hero h1{color:var(--wine)}
 .renovation-hero h1 em{color:var(--gold)}
 .renovation-hero-media{height:500px;border-radius:28px;overflow:hidden;background:#dce4e6}
-.renovation-hero-media img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.14);transform-origin:center}
+.renovation-hero-media img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
 
 .carousel-stage{background:#ded4c7;border-radius:28px;box-shadow:none}
 .carousel-stage img{background:#ded4c7}
