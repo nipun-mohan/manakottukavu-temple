@@ -10,7 +10,7 @@ const documentPages = Array.from({ length: 11 }, (_, i) => `${mediaHost}/renovat
 const sponsorships = [
   ["Karinkal pillar", "കരിങ്കൽ തൂൺ", "₹25,000"], ["Ghana Dwaram", "ഘനദ്വാരം", "₹45,000"], ["Sopanam", "സോപാനം", "₹35,000"],
   ["Ovu Vyaali", "ഓവ് വ്യാളി", "₹15,500"], ["Door frame", "കട്ടിള", "₹25,000"], ["Wall support", "ഭിത്തി കാൽ", "₹5,000"],
-  ["Floor paving", "തളം വിരിക്കൽ", "₹5,000"], ["Utharam", "ഉത്തരം", "₹15,000"], ["Roof tile with battens", "കഴുക്കോൽ (കൊത്തുപണിയോടുകൂടി)", "₹12,000"],
+  ["Floor paving", "തളം വിരിക്കൽ", "₹5,000"], ["Utharam", "ഉത്തരം", "₹15,000"], ["Wooden rafter (with carving)", "കഴുക്കോൽ (കൊത്തുപണിയോടുകൂടി)", "₹12,000"],
   ["Mukhappu", "മുഖപ്പ്", "₹1,00,000"], ["Wooden Vyaali", "വ്യാളി മരത്തിൽ", "₹25,000"],
 ];
 
