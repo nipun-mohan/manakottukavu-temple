@@ -8,10 +8,10 @@ const originalSlides = Array.from({ length: 18 }, (_, i) => `${mediaHost}/renova
 const documentPages = Array.from({ length: 11 }, (_, i) => `${mediaHost}/renovation/document/page-${String(i + 1).padStart(2, "0")}.jpg`);
 
 const sponsorships = [
-  ["Karinkal pillar", "കരിങ്കൽ തൂൺ", "₹25,000"], ["Door", "പുനർദ്വാരം", "₹45,000"], ["Sopanam", "സോപാനം", "₹35,000"],
-  ["Roof beam / Vaarli", "ഓട് വാർളി", "₹15,500"], ["Stone", "കല്ല്", "₹25,000"], ["Wall stone", "ഭിത്തിക്കല്ല്", "₹5,000"],
-  ["Floor stone", "തറ വിരിപ്പുകല്ല്", "₹5,000"], ["Utharam", "ഉത്തരം", "₹15,000"], ["Roof tile with battens", "കഴുക്കോൽ (കൊത്തുപണിയോടുകൂടി)", "₹12,000"],
-  ["Mukhappu", "മുഖപ്പ്", "₹1,00,000"], ["Exterior wall", "പുറമതിൽ", "₹25,000"],
+  ["Karinkal pillar", "കരിങ്കൽ തൂൺ", "₹25,000"], ["Ghana Dwaram", "ഘനദ്വാരം", "₹45,000"], ["Sopanam", "സോപാനം", "₹35,000"],
+  ["Ovu Vyaali", "ഓവ് വ്യാളി", "₹15,500"], ["Door frame", "കട്ടിള", "₹25,000"], ["Wall support", "ഭിത്തി കാൽ", "₹5,000"],
+  ["Floor paving", "തളം വിരിക്കൽ", "₹5,000"], ["Utharam", "ഉത്തരം", "₹15,000"], ["Roof tile with battens", "കഴുക്കോൽ (കൊത്തുപണിയോടുകൂടി)", "₹12,000"],
+  ["Mukhappu", "മുഖപ്പ്", "₹1,00,000"], ["Wooden Vyaali", "വ്യാളി മരത്തിൽ", "₹25,000"],
 ];
 
 export default function RenovationPage() {
