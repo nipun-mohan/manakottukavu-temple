@@ -1,0 +1,20 @@
+services:
+  web:
+    image: node:22
+    working_dir: /app
+    command: sh -c "npm install && WRANGLER_LOG_PATH=.wrangler/wrangler.log npx vinext dev --hostname 0.0.0.0"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS
+      - BASE44_PUBLIC_HOST_SUFFIX
+      - CODEX_SANDBOX=seatbelt
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 60s
